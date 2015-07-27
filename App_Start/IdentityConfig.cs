@@ -10,6 +10,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using System.Configuration;
+using SendGrid;
+using System.Net.Mail;
+using System.Net;
 using bug_tracker.Models;
 
 namespace bug_tracker
@@ -19,6 +23,19 @@ namespace bug_tracker
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
+            var username = ConfigurationManager.AppSettings["SendGridUserName"];
+            var password = ConfigurationManager.AppSettings["SendGridPassword"];
+            var from = ConfigurationManager.AppSettings["FromEmailAuto"];
+
+            SendGridMessage myMessage = new SendGridMessage();
+            myMessage.AddTo(message.Destination);
+            myMessage.From = new MailAddress(from);
+            myMessage.Subject = message.Subject;
+            myMessage.Text = message.Body;
+            myMessage.Html = message.Body;
+            var credentials = new NetworkCredential(username, password);
+            var transportWeb = new Web(credentials);
+            transportWeb.DeliverAsync(myMessage);
             return Task.FromResult(0);
         }
     }

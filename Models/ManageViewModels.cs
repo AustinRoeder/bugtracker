@@ -57,6 +57,24 @@ namespace bug_tracker.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+    public class ChangeUsernameViewModel
+    {
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Current email")]
+        public string OldUsername { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "New email")]
+        public string NewUsername { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Confirm new email")]
+        [Compare("NewUsername", ErrorMessage = "The new email and confirmation email do not match.")]
+        public string ConfirmUsername { get; set; }
+    }
 
     public class AddPhoneNumberViewModel
     {

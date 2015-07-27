@@ -1,0 +1,6 @@
+﻿.grey-gradient{
+    background-image: linear-gradient(to bottom, #525252 28%, black 95%);
+}
+.nav-item:hover{
+    background-color: black;
+}

@@ -53,3 +53,5 @@ C:\Users\Austin\Documents\GitHub\bug-tracker\bug-tracker\bin\Microsoft.Owin.Secu
 C:\Users\Austin\Documents\GitHub\bug-tracker\bug-tracker\obj\Debug\bug-tracker.csprojResolveAssemblyReference.cache
 C:\Users\Austin\Documents\GitHub\bug-tracker\bug-tracker\obj\Debug\bug-tracker.dll
 C:\Users\Austin\Documents\GitHub\bug-tracker\bug-tracker\obj\Debug\bug-tracker.pdb
+C:\Users\Austin\Documents\GitHub\bug-tracker\bug-tracker\bin\SendGrid.SmtpApi.dll
+C:\Users\Austin\Documents\GitHub\bug-tracker\bug-tracker\bin\SendGridMail.dll

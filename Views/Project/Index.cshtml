@@ -1,0 +1,43 @@
+﻿@model IEnumerable<bug_tracker.Models.Project>
+
+@{
+    ViewBag.Title = "Project Index";
+}
+
+<h2>Projects</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Manager)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Updated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style=" width:25%">
+                @Html.DisplayFor(modelItem => (item.Manager.FirstName + " " + item.Manager.LastName))
+            </td>
+            <td style=" width:25%">
+                @Html.DisplayFor(modelItem => item.Created.LocalDateTime)
+            </td>
+            <td style=" width:25%">
+                @Html.DisplayFor(modelItem => item.Updated)
+            </td>
+            <td style=" width:25%">
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+        </tr>
+    }
+</table>
