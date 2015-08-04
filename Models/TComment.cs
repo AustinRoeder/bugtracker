@@ -9,11 +9,11 @@ namespace bug_tracker.Models
     {
         public int ID { get; set; }
         public int TicketID { get; set; }
-        public string AuthorID { get; set; }
         public string Body { get; set; }
+        public string OwnerID { get; set; }
         public DateTimeOffset Created { get; set; }
 
-        public virtual ApplicationUser Author { get; set; }
         public virtual Ticket Ticket { get; set; }
+        public virtual ApplicationUser Owner { get; set; }
     }
 }

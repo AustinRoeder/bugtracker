@@ -5,39 +5,94 @@
 }
 
 <h2>Projects</h2>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Manager)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Updated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-    </tr>
+@if (User.IsInRole("Admin")) { 
+    var form = "<form method=\"post\" action=\"" + Url.Action("Create") + "\">" +
+                    Html.AntiForgeryToken().ToString() +
+                    "<input type=\"text\" name=\"Title\" placeholder=\"Title of new project*\" />" +
+                    "<button type=\"submit\">Create</button>" +
+                "</form>";
+        <a id="projCreate" href="#" data-toggle="popover" data-trigger="click" 
+            style="cursor:pointer" title="Project Creation" data-content="@form" data-html="true">
+            Create A Project
+        </a>
+}
+<table class="no-footer display" id="projectsTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tickets)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
     @foreach (var item in Model)
     {
         <tr>
-            <td style=" width:25%">
-                @Html.DisplayFor(modelItem => (item.Manager.FirstName + " " + item.Manager.LastName))
+            <td>
+                <div class="row">
+                    <div class="col-xs-6">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </div>
+                    <div class="col-xs-2 pull-right">
+                        @if (User.IsInRole("Admin"))
+                        {
+                        <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
+                           data-target="#editModal" data-id="@item.Id" data-title="@item.Title" style="text-decoration:none;"></a>
+                        }
+                    </div>
+                </div>
             </td>
-            <td style=" width:25%">
-                @Html.DisplayFor(modelItem => item.Created.LocalDateTime)
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.Tickets.Count)
             </td>
-            <td style=" width:25%">
-                @Html.DisplayFor(modelItem => item.Updated)
-            </td>
-            <td style=" width:25%">
-                @Html.DisplayFor(modelItem => item.Title)
+            <td>
+                <div class="col-xs-9">
+                    @Html.DisplayFor(modelItem => item.Users)
+                </div>
+                <a class="col-xs-2 pull-right glyphicon glyphicon-plus" href="#" style="text-decoration:none;"></a>
             </td>
         </tr>
     }
+    </tbody>
 </table>
+
+<div class="modal fade modal-sm" id="editModal" tabindex="-1" role="dialog"
+     aria-labelledby="modalLabel" aria-hidden="true" style="display: none; top: 30%; left: 35%;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align:center">
+                <h2 class="modal-title" id="modalLabel">Edit Project</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="text-align:center">
+                    <form method="post" action="@Url.Action("Edit")">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" id="id" name="Id" value="" />
+                        <input type="text" class="text-center" id="title" name="Title" placeholder="Enter a new title"/>
+                        <hr />
+                        <button type="submit">Save Changes</button><br/>
+                        <small>*Or click below the window to close*</small>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+            $('#projectsTable').dataTable();
+            $('.edit-a').click(function () {
+                $('#id').attr('value', $(this).data('id'));
+                $('#title').text($(this).data('title'));
+            });
+        })
+    </script>
+}

@@ -9,13 +9,13 @@ namespace bug_tracker.Models
     {
         public Project() {
             this.Tickets = new HashSet<Ticket>();
+            this.Users = new HashSet<ApplicationUser>();
         }
 
         public int Id { get; set; }
-        public System.DateTimeOffset Created { get; set; }
-        public Nullable<System.DateTimeOffset> Updated { get; set; }
         public string Title { get; set; }
-        public virtual ApplicationUser Manager { get; set; }
+
         public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
     }
 }

@@ -14,13 +14,12 @@ namespace bug_tracker.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "bug_tracker.Models.ApplicationDbContext";
         }
 
         protected override void Seed(bug_tracker.Models.ApplicationDbContext context)
         {
             var roleManager = new RoleManager<IdentityRole>(
-                new RoleStore<IdentityRole>(context));
+                 new RoleStore<IdentityRole>(context));
 
             if (!context.Roles.Any(r => r.Name == "Admin"))
             {
@@ -53,19 +52,64 @@ namespace bug_tracker.Migrations
                     DisplayName = "Austin",
                 }, "Purdue96!");
             }
-            if (!context.Users.Any(u => u.Email == "demo@bugtracker.com"))
+            if (!context.Users.Any(u => u.Email == "admin@bugtracker.com"))
             {
                 userManager.Create(new ApplicationUser
                 {
-                    UserName = "demo@bugtracker.com",
-                    Email = "demo@bugtracker.com",
-                    FirstName = "Demo",
-                    LastName = "Admin",
-                    DisplayName = "Demo",
+                    UserName = "admin@bugtracker.com",
+                    Email = "admin@bugtracker.com",
+                    FirstName = "Admin",
+                    LastName = "Demo",
+                    DisplayName = "Admin Demo",
                 }, "Password1!");
             }
 
-            var demoID = userManager.FindByEmail("demo@bugtracker.com").Id;
+            if (!context.Users.Any(u => u.Email == "manager@bugtracker.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "manager@bugtracker.com",
+                    Email = "manager@bugtracker.com",
+                    FirstName = "Manager",
+                    LastName = "Demo",
+                    DisplayName = "Manager Demo",
+                }, "Password1!");
+            }
+
+            if (!context.Users.Any(u => u.Email == "dev@bugtracker.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "dev@bugtracker.com",
+                    Email = "dev@bugtracker.com",
+                    FirstName = "Developer",
+                    LastName = "Demo",
+                    DisplayName = "Developer Demo",
+                }, "Password1!");
+            }
+
+            if (!context.Users.Any(u => u.Email == "sub@bugtracker.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "sub@bugtracker.com",
+                    Email = "sub@bugtracker.com",
+                    FirstName = "Submitter",
+                    LastName = "Demo",
+                    DisplayName = "Submitter Demo",
+                }, "Password1!");
+            }
+
+            var subID = userManager.FindByEmail("sub@bugtracker.com").Id;
+            userManager.AddToRole(subID, "Submitter");
+
+            var devID = userManager.FindByEmail("dev@bugtracker.com").Id;
+            userManager.AddToRole(devID, "Developer");
+
+            var modID = userManager.FindByEmail("manager@bugtracker.com").Id;
+            userManager.AddToRole(modID, "Project Manager");
+
+            var demoID = userManager.FindByEmail("admin@bugtracker.com").Id;
             userManager.AddToRole(demoID, "Admin");
 
             var userID = userManager.FindByEmail("austinjroeder@gmail.com").Id;

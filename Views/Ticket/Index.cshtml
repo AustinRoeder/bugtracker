@@ -1,3 +1,69 @@
-﻿@{
-    
+﻿@model IEnumerable<bug_tracker.Models.Ticket>
+@{
+    ViewBag.Title = "Ticket Index";
+}
+<div class="container">
+    <h2>Ticket Manager</h2>
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("Create")" style="text-decoration-color:black; color: darkblue;">Create New Ticket</a>
+    }
+    <br />
+    <table class="no-footer display" id="ticketsTable">
+        <thead>
+            <tr>
+                <th>   
+                    Title
+                </th>
+                <th>
+                    Owner
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Priority
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Project
+                </th>
+                <th>
+                    Assigned Developer
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Owner.DisplayName</td>
+                <td>@item.Status.Name</td>
+                <td>@item.Priority.Name</td>
+                <td>@item.Type.Name</td>
+                <td>@item.Project.Title</td>
+                @if (item.AssignedToUser != null)
+                {
+                    <td>@item.AssignedToUser.DisplayName</td>
+                }
+                else
+                {
+                    <td>None Assigned Currently</td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#ticketsTable').dataTable({
+                "order": [[0, "asc"]]
+            });
+        });
+    </script>
 }

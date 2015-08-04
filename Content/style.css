@@ -4,3 +4,13 @@
 .nav-item:hover{
     background-color: black;
 }
+.form-group{
+    margin-bottom:15px;
+    height: 50px;
+}
+.sorting:hover{
+    background-color: #f2f2f2;
+}
+.popover{
+    position: relative;
+}

@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace bug_tracker.Models
 {
@@ -12,6 +13,7 @@ namespace bug_tracker.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DisplayName { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -36,5 +38,10 @@ namespace bug_tracker.Models
         public DbSet<Project> Projects { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TComment> TComments { get; set; }
+        public DbSet<THistory> THistories { get; set; }
+        public DbSet<TPriority> TPriorities { get; set; }
+        public DbSet<TStatus> TStatuses { get; set; }
+        public DbSet<TType> TTypes { get; set; }
+
     }
 }

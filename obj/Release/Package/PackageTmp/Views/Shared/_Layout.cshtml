@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Tracker - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/DataTables-1.10.7/media/css/jquery.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/multi-select.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top grey-gradient">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"><a style="color: white" href="/Home/Index">Home</a></li>
+                    @if (User.Identity.IsAuthenticated) { 
+                    <li class="nav-item"><a style="color: white" href="/Ticket/Index">Tickets</a></li>
+                    }
+                    @if(User.IsInRole("Admin")) {
+                    <li class="nav-item"><a style="color: white" href="/Project/Index">Projects</a></li>
+                    <li class="nav-item"><a style="color: white" href="/Admin/Users">Users</a></li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Austin's Bug Tracker</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery.multi-select.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="/DataTables-1.10.7/media/js/jquery.js"></script>
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="/DataTables-1.10.7/media/js/jquery.dataTables.js"></script>
+    
+    <!-- SelectTables -->
+    <script src="~/Scripts/js/bootstrap-select.js"></script>
+</body>
+</html>

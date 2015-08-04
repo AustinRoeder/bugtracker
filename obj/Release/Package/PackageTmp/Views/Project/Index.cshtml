@@ -1,0 +1,98 @@
+﻿@model IEnumerable<bug_tracker.Models.Project>
+
+@{
+    ViewBag.Title = "Project Index";
+}
+
+<h2>Projects</h2>
+@if (User.IsInRole("Admin")) { 
+    <form method="post" action="@Url.Action("Create")">
+        @Html.AntiForgeryToken()
+        <a id="projCreate" href="#" data-toggle="popover" data-target="#createPop" data-trigger="focus" style="cursor:pointer" title="Project Creation">
+            Create A Project
+        </a>
+        <div id="createPop" class="popover fade right" style="top: 80px; left: 146px; display: block;">
+            <div class="arrow"></div>
+            <div class="popover-title">
+                Project Creation
+            </div>
+            <div class="popover-content">
+                <input type="text" name="Title" placeholder="Title of new project*" />
+                <button type="submit">Create</button>
+            </div>
+        </div>
+    </form>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tickets)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users)
+        </th>
+        <th>
+            Edit
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tickets.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Users)
+            </td>
+            <td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
+                       data-target="#editModal" data-id="@item.Id" data-title="@item.Title" style="text-decoration:none;color:black;"></a>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="modal fade modal-sm" id="editModal" tabindex="-1" role="dialog"
+     aria-labelledby="modalLabel" aria-hidden="true" style="display: none; top: 30%; left: 35%;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align:center">
+                <h2 class="modal-title" id="modalLabel">Edit Project</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="text-align:center">
+                    <form method="post" action="@Url.Action("Edit")">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" id="id" name="Id" value="" />
+                        <input type="text" class="text-center" id="title" name="Title"/>
+                        <hr />
+                        <button type="submit">Save Changes</button><br/>
+                        <small>*Or click outside window to close*</small>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function(){
+            $('#projCreate').click(function () {
+                $('#createPop').addClass('in');
+            });
+            $('.edit-a').click(function () {
+                $('#id').val($(this).data('id'));
+                $('#title').val($(this).data('title'));
+            })
+        });
+    </script>
+}
