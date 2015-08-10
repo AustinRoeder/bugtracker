@@ -9,7 +9,9 @@ namespace bug_tracker.Models
     {
         public Ticket()
         {
+            this.Histories = new HashSet<THistory>();
             this.Comments = new HashSet<TComment>();
+            this.Attachments = new HashSet<TAttachment>();
         }
 
         public int Id { get; set; }
@@ -30,6 +32,8 @@ namespace bug_tracker.Models
         public virtual TPriority Priority { get; set; }
         public virtual ApplicationUser Owner { get; set; }
         public virtual ApplicationUser AssignedToUser { get; set; }
+        public virtual ICollection<THistory> Histories { get; set; }
         public virtual ICollection<TComment> Comments { get; set; }
+        public virtual ICollection<TAttachment> Attachments { get; set; }
     }
 }

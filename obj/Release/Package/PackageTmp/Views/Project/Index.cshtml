@@ -5,60 +5,68 @@
 }
 
 <h2>Projects</h2>
-@if (User.IsInRole("Admin")) { 
-    <form method="post" action="@Url.Action("Create")">
-        @Html.AntiForgeryToken()
-        <a id="projCreate" href="#" data-toggle="popover" data-target="#createPop" data-trigger="focus" style="cursor:pointer" title="Project Creation">
+@if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
+{ 
+    var form = "<form method=\"post\" action=\"" + Url.Action("Create") + "\">" +
+                    Html.AntiForgeryToken().ToString() +
+                    "<input type=\"text\" name=\"Title\" placeholder=\"Title of new project*\" />" +
+                    "<button type=\"submit\">Create</button>" +
+                "</form>";
+        <a id="projCreate" href="#" data-toggle="popover" data-trigger="click" 
+            style="cursor:pointer;text-decoration:none;color:darkblue;" title="Project Creation" data-content="@form" data-html="true">
             Create A Project
         </a>
-        <div id="createPop" class="popover fade right" style="top: 80px; left: 146px; display: block;">
-            <div class="arrow"></div>
-            <div class="popover-title">
-                Project Creation
-            </div>
-            <div class="popover-content">
-                <input type="text" name="Title" placeholder="Title of new project*" />
-                <button type="submit">Create</button>
-            </div>
-        </div>
-    </form>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tickets)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Users)
-        </th>
-        <th>
-            Edit
-        </th>
-    </tr>
+<table class="no-footer display" id="projectsTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tickets)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                <div class="row">
+                    <div class="col-xs-6">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </div>
+                    <div class="col-xs-2 pull-right">
+                        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
+                        {
+                        <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
+                           data-target="#editModal" data-id="@item.Id" data-title="@item.Title" style="text-decoration:none;"></a>
+                        }
+                    </div>
+                </div>
             </td>
-            <td>
+            <td style="text-align:center">
                 @Html.DisplayFor(modelItem => item.Tickets.Count)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Users)
-            </td>
-            <td>
-                @if (User.IsInRole("Admin"))
-                {
-                    <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
-                       data-target="#editModal" data-id="@item.Id" data-title="@item.Title" style="text-decoration:none;color:black;"></a>
+                <div class="col-xs-9">
+                    @foreach (var user in item.Users) { 
+                        @Html.DisplayFor(modelItem => user.DisplayName)
+                        <br />
+                    }
+                </div>
+                @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
+                { 
+                <a class="col-xs-2 pull-right glyphicon glyphicon-plus" href="@Url.Action("Users", new { id = item.Id})" style="text-decoration:none;"></a>
                 }
             </td>
         </tr>
     }
+    </tbody>
 </table>
 
 <div class="modal fade modal-sm" id="editModal" tabindex="-1" role="dialog"
@@ -73,10 +81,10 @@
                     <form method="post" action="@Url.Action("Edit")">
                         @Html.AntiForgeryToken()
                         <input type="hidden" id="id" name="Id" value="" />
-                        <input type="text" class="text-center" id="title" name="Title"/>
+                        <input type="text" class="text-center" id="title" name="Title" placeholder="Enter a new title"/>
                         <hr />
                         <button type="submit">Save Changes</button><br/>
-                        <small>*Or click outside window to close*</small>
+                        <small>*Or click below the window to close*</small>
                     </form>
                 </div>
             </div>
@@ -86,13 +94,12 @@
 @section scripts{
     <script>
         $(document).ready(function(){
-            $('#projCreate').click(function () {
-                $('#createPop').addClass('in');
-            });
+            $('[data-toggle="popover"]').popover();
+            $('#projectsTable').dataTable();
             $('.edit-a').click(function () {
-                $('#id').val($(this).data('id'));
-                $('#title').val($(this).data('title'));
-            })
-        });
+                $('#id').attr('value', $(this).data('id'));
+                $('#title').text($(this).data('title'));
+            });
+        })
     </script>
 }

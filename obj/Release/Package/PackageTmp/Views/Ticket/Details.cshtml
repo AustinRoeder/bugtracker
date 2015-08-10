@@ -1,0 +1,194 @@
+﻿@using Microsoft.AspNet.Identity;
+@model bug_tracker.Models.Ticket
+@{
+    ViewBag.Title = "Details";
+    var userId = User.Identity.GetUserId();
+}
+<section class="content-wrap">
+    <h2>Ticket Details:</h2>
+    <h3>
+        @Model.Title
+    </h3>
+    <small><a href="@Url.Action("Edit", new { id = Model.Id})"
+   style="text-decoration:none;">Edit</a></small>
+    <hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4><b>Description</b></h4>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <p>@Model.Desc</p>                                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Histories</a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="col-sm-11">
+                        <table class="table table-striped" id="histTable">
+                            <thead>
+                                <tr>
+                                    <th>Editor</th>
+                                    <th>Updated Property</th>
+                                    <th>Old Value</th>
+                                    <th>New Value</th>
+                                    <th>Updated Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Histories.Count < 1)
+                                {
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var history in Model.Histories)
+                                    {
+                                        <tr>
+                                            <td>@history.User.DisplayName</td>
+                                            <td>@history.Property</td>
+                                            <td>@history.OldValue</td>
+                                            <td>@history.NewValue</td>
+                                            <td>@history.Updated.LocalDateTime</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Comments</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @if (Model.OwnerId == userId || Model.AssignedToUserId == userId || Model.Project.Users.Any(u => u.Id == userId)) { 
+                        <div class="col-xs-12" style="margin-bottom: 10px;">
+                            <h4>Leave a Comment:</h4>
+                            <form role="form" method="post" action="@Url.Action("CommentCreate")">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="TicketId" value="@Model.Id" />
+                                <textarea name="Body" placeholder="Write your comment here."></textarea><br />
+                                <button type="submit" class="btn btn-primary grey-gradient" style="margin-bottom:10px;">Submit</button>
+                            </form>
+                        </div>
+                    }
+                    @foreach (var c in Model.Comments.OrderByDescending(d => d.Created))
+                    {
+            <!-- Comment -->
+                        <div class="media col-xs-11" style="margin-bottom:20px;">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" src="http://placehold.it/64x64" alt="">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    @c.Owner.FirstName
+                                    <small>@c.Created.DateTime</small>
+                                </h4>
+                                @c.Body
+                            </div>
+                        </div>
+                        <div class="col-xs-1">
+                            @if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
+                            {
+                                <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
+                                   data-target="#editModal" data-id="@c.Id" data-body="@c.Body" style="text-decoration:none;color:black;"></a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Attachments</a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>Add a file for observing purposes (i.e. Picture of the problem)</p>
+                    @if (Model.OwnerId == userId || Model.AssignedToUserId == userId || Model.Project.Users.Any(u => u.Id == userId)) { 
+                        <div class="col-xs-10">
+                            <form method="post" action="@Url.Action("AttachmentCreate")" enctype="multipart/form-data">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@Model.Id" />
+                                <input name="file" type="file" />
+                                <button type="submit" class="btn btn-primary grey-gradient" style="margin-bottom:10px;">Submit</button>
+                            </form>
+                        </div>
+                    }
+                    <div class="col-xs-10">
+                        @foreach (var a in Model.Attachments)
+                        {
+                            if (a.FileUrl != null)
+                            {
+                                <div class="centered">
+                                    <img class="img-responsive" src="@a.FileUrl" alt="">
+                                </div>
+                                <br>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+            aria-labelledby="modalLabel" aria-hidden="true" style="display: none">
+        <div class="modal-dialog" style="width: 30%;">
+            <div class="modal-content">
+                <div class="modal-header" style="text-align:center">
+                    <h2 class="modal-title" id="modalLabel">Edit Comment</h2>
+                </div>
+                <div class="modal-body col-xs-12" style="background-color: gainsboro">
+                    <div class="row" style="text-align:center">
+                        <form method="post" action="@Url.Action("CommentEdit")">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="PostID" value="@Model.Id" />
+                            <input id="Edit-Id" type="hidden" name="id" value="" />
+                            <textarea id="body" name="Body"></textarea><br />
+                            <button type="submit">Confirm Edit</button><button type="button" onclick="location.href='@Url.Action("Details", new { id = Model.Id })'">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#histTable').DataTable({
+                responsive: true,
+                "order":  [[4, "desc"]]
+            });
+            $('.edit-a').click(function () {
+                $('#Edit-Id').attr('value', $(this).data('id'));
+                $('#body').text($(this).data('body'));
+            })
+        });
+    </script>
+}

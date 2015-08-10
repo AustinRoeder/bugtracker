@@ -12,14 +12,14 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace bug_tracker.Controllers
 {
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles="Admin,Global Admin, Project Manager")]
     [RequireHttps]
     public class AdminController : Controller
     {
         UserRolesHelper helper = new UserRolesHelper();
         ApplicationDbContext db = new ApplicationDbContext();
 
-        public ActionResult Users()
+        public ActionResult Index()
         {
 
             var roles = db.Roles.ToList();
@@ -33,22 +33,24 @@ namespace bug_tracker.Controllers
             };
 
             return View(model);
-
-
         }
 
         public ActionResult Edit(string RoleName)
         {
-            var usersInRole = helper.UsersInRole(RoleName).Select(u => u.Id);
-
-            var model = new RoleManager
+            if (RoleName == "Global Admin") { return RedirectToAction("Index"); }
+            else
             {
-                RoleId = db.Roles.FirstOrDefault(r => r.Name == RoleName).Id,
-                RoleName = RoleName,
-                Users = new MultiSelectList(db.Users.ToList(), "Id", "DisplayName", usersInRole),
-            };
+                var usersInRole = helper.UsersInRole(RoleName).Select(u => u.Id);
 
-            return View(model);
+                var model = new RoleManager
+                {
+                    RoleId = db.Roles.FirstOrDefault(r => r.Name == RoleName).Id,
+                    RoleName = RoleName,
+                    Users = new MultiSelectList(db.Users.ToList(), "Id", "DisplayName", usersInRole),
+                };
+
+                return View(model);
+            }
         }
 
         [HttpPost]

@@ -23,9 +23,9 @@
                     @if(!User.IsInRole("Submitter") && User.Identity.IsAuthenticated) {
                     <li class="nav-item"><a style="color: white" href="/Project/Index">Projects</a></li>
                     }
-                    @if (User.IsInRole("Admin"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
                     {
-                    <li class="nav-item"><a style="color: white" href="/Admin/Users">Users</a></li>
+                    <li class="nav-item"><a style="color: white" href="/Admin/Index">Users</a></li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

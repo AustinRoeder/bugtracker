@@ -4,6 +4,7 @@ namespace bug_tracker.Migrations
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -20,22 +21,12 @@ namespace bug_tracker.Migrations
         {
             var roleManager = new RoleManager<IdentityRole>(
                  new RoleStore<IdentityRole>(context));
-
-            if (!context.Roles.Any(r => r.Name == "Admin"))
+            var roles = new List<string>() {"Global Admin", "Admin", "Project Manager",
+                                                            "Developer", "Submitter"};
+            foreach( var role in roles )
             {
-                roleManager.Create(new IdentityRole { Name = "Admin" });
-            }
-            if (!context.Roles.Any(r => r.Name == "Project Manager"))
-            {
-                roleManager.Create(new IdentityRole { Name = "Project Manager" });
-            }
-            if (!context.Roles.Any(r => r.Name == "Developer"))
-            {
-                roleManager.Create(new IdentityRole { Name = "Developer" });
-            }
-            if (!context.Roles.Any(r => r.Name == "Submitter"))
-            {
-                roleManager.Create(new IdentityRole { Name = "Submitter" });
+                if (!context.Roles.Any(r => r.Name == role))
+                    roleManager.Create(new IdentityRole { Name = role });
             }
 
             var userManager = new UserManager<ApplicationUser>(
@@ -113,7 +104,7 @@ namespace bug_tracker.Migrations
             userManager.AddToRole(demoID, "Admin");
 
             var userID = userManager.FindByEmail("austinjroeder@gmail.com").Id;
-            userManager.AddToRole(userID, "Admin");
+            userManager.AddToRole(userID, "Global Admin");
         }
     }
 }

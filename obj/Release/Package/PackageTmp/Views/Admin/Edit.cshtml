@@ -17,8 +17,9 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <p>Manage Users:</p>
-                                @using (Html.BeginForm("Edit", "Admin", FormMethod.Post))
+                                @using (Html.BeginForm())
                                 {
+                                    
                                     @Html.HiddenFor(model => model.RoleName)
                                     @Html.HiddenFor(model => model.RoleId)
                                     @Html.AntiForgeryToken()
@@ -37,7 +38,7 @@
     <br />
     <div class="row">
         <div class="col-md-12">
-            <a href="@Url.Action("Users")">Back to User Control</a>
+            <a href="@Url.Action("Index")">Back to User Control</a>
         </div>
     </div>
 
@@ -50,7 +51,7 @@
     <script src="~/Scripts/jquery.multi-select.js" type="text/javascript"></script>
     <script>
    $(document).ready(function () {
-       $('#my-select').multiSelect()
+       $('#my-select').multiSelect();
    })
     </script>
 }

@@ -20,9 +20,12 @@
                     @if (User.Identity.IsAuthenticated) { 
                     <li class="nav-item"><a style="color: white" href="/Ticket/Index">Tickets</a></li>
                     }
-                    @if(User.IsInRole("Admin")) {
+                    @if(!User.IsInRole("Submitter") && User.Identity.IsAuthenticated) {
                     <li class="nav-item"><a style="color: white" href="/Project/Index">Projects</a></li>
-                    <li class="nav-item"><a style="color: white" href="/Admin/Users">Users</a></li>
+                    }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
+                    {
+                    <li class="nav-item"><a style="color: white" href="/Admin/Index">Users</a></li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -39,15 +42,13 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
     <script src="~/Scripts/jquery.multi-select.js"></script>
-    <!-- jQuery -->
-    <script type="text/javascript" charset="utf8" src="/DataTables-1.10.7/media/js/jquery.js"></script>
 
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="/DataTables-1.10.7/media/js/jquery.dataTables.js"></script>
     
     <!-- SelectTables -->
     <script src="~/Scripts/js/bootstrap-select.js"></script>
+        @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -11,3 +11,6 @@
 .sorting:hover{
     background-color: #f2f2f2;
 }
+.popover{
+    position: relative;
+}

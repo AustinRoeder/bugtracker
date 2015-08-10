@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Users";
+    ViewBag.Title = "Index";
 }
 <h2>Admin's Role Editing Station</h2>
 <table class="table">
@@ -12,12 +12,15 @@
     <tbody>
         @foreach (var role in Model.RoleList)
         {
+            if (role.Name == "Global Admin") { }
+            else { 
             <tr>
                 <td>@role.Name</td>
                 <td>
                     <a href="@Url.Action("Edit", "Admin", new { RoleName = role.Name })" class="btn btn-primary grey-gradient">Manager Users</a>
                 </td>
             </tr>
+            }
         }
     </tbody>
     <tfoot>

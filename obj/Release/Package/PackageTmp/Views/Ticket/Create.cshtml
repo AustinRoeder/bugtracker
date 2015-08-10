@@ -7,6 +7,12 @@
     for (var i = 0; i < projArr.Count; i++) {
         projects.Add(new SelectListItem { Value = projArr[i].Id.ToString() , Text = projArr[i].Title });
     }
+    var devArr = ViewBag.Devs;
+    List<SelectListItem> devs = new List<SelectListItem>();
+    for (var i = 0; i < devArr.Count; i++)
+    {
+        devs.Add(new SelectListItem { Value = devArr[i].Id.ToString(), Text = devArr[i].DisplayName });
+    }
 }
 <div class="container">
     <div class="row">
@@ -23,14 +29,14 @@
             </div>
         </div>
         <div class="form-group" style="height:100px;">
-            @Html.LabelFor(model => model.Desc, htmlAttributes: new { @class = "control-label col-xs-2" })
+            @Html.LabelFor(model => model.Desc, "Description", htmlAttributes: new { @class = "control-label col-xs-2" })
             <div class="col-xs-10">
                 @Html.TextAreaFor(model => model.Desc, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Desc, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group" style="margin-bottom: 15px;">
-            @Html.LabelFor(model => model.PriorityId, htmlAttributes: new { @class = "control-label col-xs-2" })
+            @Html.LabelFor(model => model.PriorityId, "Priority", htmlAttributes: new { @class = "control-label col-xs-2" })
             <div class="col-xs-10">
                 @Html.DropDownListFor(model => model.PriorityId, new List<SelectListItem> {
                        new SelectListItem { Value = "1" , Text = "Low" },
@@ -41,9 +47,9 @@
             </div>
         </div>
         <div class="form-group" style="margin-bottom: 15px;">
-            @Html.LabelFor(model => model.TypeId, htmlAttributes: new { @class = "control-label col-xs-2" })
+            @Html.LabelFor(model => model.TypeId, "Type", htmlAttributes: new { @class = "control-label col-xs-2" })
             <div class="col-xs-10">
-                @Html.DropDownListFor(model => model.TypeId, new List<SelectListItem> { 
+                @Html.DropDownListFor(model => model.TypeId, new List<SelectListItem> {
                        new SelectListItem { Value = "1" , Text = "Improvement" },
                        new SelectListItem { Value = "2" , Text = "Bug" },
                        new SelectListItem { Value = "3" , Text = "Aesthetic" }
@@ -52,12 +58,22 @@
             </div>
         </div>
         <div class="form-group" style="margin-bottom: 15px;">
-            @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-xs-2" })
+            @Html.LabelFor(model => model.ProjectId,"Project", htmlAttributes: new { @class = "control-label col-xs-2" })
             <div class="col-xs-10">
                 @Html.DropDownListFor(model => model.ProjectId, projects, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
             </div>
         </div>
+        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
+        {
+            <div class="form-group" style="margin-bottom: 15px;">
+                @Html.LabelFor(model => model.AssignedToUserId, "Assign A User", htmlAttributes: new { @class = "control-label col-xs-2" })
+                <div class="col-xs-10">
+                    @Html.DropDownListFor(model => model.AssignedToUserId, devs, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
         <hr />
         <button type="submit">Create Ticket</button>
     </form>

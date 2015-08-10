@@ -35,13 +35,13 @@ namespace bug_tracker.Models
         {
             return new ApplicationDbContext();
         }
-        public DbSet<Project> Projects { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<TComment> TComments { get; set; }
+        public DbSet<TType> TTypes { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<TStatus> TStatuses { get; set; }
         public DbSet<THistory> THistories { get; set; }
         public DbSet<TPriority> TPriorities { get; set; }
-        public DbSet<TStatus> TStatuses { get; set; }
-        public DbSet<TType> TTypes { get; set; }
-
+        public DbSet<TComment> TComments { get; set; }
+        public DbSet<TAttachment> TAttachments { get; set; }
     }
 }

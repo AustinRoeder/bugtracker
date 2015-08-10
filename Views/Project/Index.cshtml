@@ -5,14 +5,15 @@
 }
 
 <h2>Projects</h2>
-@if (User.IsInRole("Admin")) { 
+@if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
+{ 
     var form = "<form method=\"post\" action=\"" + Url.Action("Create") + "\">" +
                     Html.AntiForgeryToken().ToString() +
                     "<input type=\"text\" name=\"Title\" placeholder=\"Title of new project*\" />" +
                     "<button type=\"submit\">Create</button>" +
                 "</form>";
         <a id="projCreate" href="#" data-toggle="popover" data-trigger="click" 
-            style="cursor:pointer" title="Project Creation" data-content="@form" data-html="true">
+            style="cursor:pointer;text-decoration:none;color:darkblue;" title="Project Creation" data-content="@form" data-html="true">
             Create A Project
         </a>
 }
@@ -40,7 +41,7 @@
                         @Html.DisplayFor(modelItem => item.Title)
                     </div>
                     <div class="col-xs-2 pull-right">
-                        @if (User.IsInRole("Admin"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
                         {
                         <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
                            data-target="#editModal" data-id="@item.Id" data-title="@item.Title" style="text-decoration:none;"></a>
@@ -53,9 +54,15 @@
             </td>
             <td>
                 <div class="col-xs-9">
-                    @Html.DisplayFor(modelItem => item.Users)
+                    @foreach (var user in item.Users) { 
+                        @Html.DisplayFor(modelItem => user.DisplayName)
+                        <br />
+                    }
                 </div>
-                <a class="col-xs-2 pull-right glyphicon glyphicon-plus" href="#" style="text-decoration:none;"></a>
+                @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
+                { 
+                <a class="col-xs-2 pull-right glyphicon glyphicon-plus" href="@Url.Action("Users", new { id = item.Id})" style="text-decoration:none;"></a>
+                }
             </td>
         </tr>
     }

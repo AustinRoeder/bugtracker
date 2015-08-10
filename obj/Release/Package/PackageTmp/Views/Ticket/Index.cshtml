@@ -1,69 +1,80 @@
-﻿@model IEnumerable<bug_tracker.Models.Ticket>
+﻿@using Microsoft.AspNet.Identity;
+@model IEnumerable<bug_tracker.Models.Ticket>
 @{
     ViewBag.Title = "Ticket Index";
 }
 <div class="container">
     <h2>Ticket Manager</h2>
-    @if (User.IsInRole("Admin"))
-    {
-        <a href="@Url.Action("Create")" style="text-decoration-color:black; color: darkblue;">Create New Ticket</a>
-    }
-    
-    <table class="dataTable no-footer" id="ticketsTable" role="grid" aria-describedby="ticketsTable_info">
+    <a href="@Url.Action("Create")" style="text-decoration:none; color: darkblue;">Create New Ticket</a>
+    <br />
+    <small>*Click the name of the ticket to get more details*</small>
+    <hr />
+    <table class="no-footer display" id="ticketsTable">
         <thead>
             <tr>
-                <th class="sorting" tabindex="0" aria-controls="ticketsTable" rowspan="1" colspan="1" aria-label="Title : activate to sort column ascending" style="width: 55px; outline: none">
+                <th>   
                     Title
                 </th>
-                <th class="sorting" tabindex="0" aria-controls="ticketsTable" rowspan="1" colspan="1" aria-label="Owner Name : activate to sort column ascending" style="width: 55px; outline: none">
+                <th>
                     Owner
                 </th>
-                <th class="sorting" tabindex="0" aria-controls="ticketsTable" rowspan="1" colspan="1" aria-label="Status Name : activate to sort column ascending" style="width: 55px; outline: none">
+                <th>
                     Status
                 </th>
-                <th class="sorting" tabindex="0" aria-controls="ticketsTable" rowspan="1" colspan="1" aria-label="Priority Name : activate to sort column ascending" style="width: 55px; outline: none">
+                <th>
                     Priority
                 </th>
-                <th class="sorting" tabindex="0" aria-controls="ticketsTable" rowspan="1" colspan="1" aria-label="Type Name : activate to sort column ascending" style="width: 55px; outline: none">
+                <th>
                     Type
                 </th>
-                <th class="sorting" tabindex="0" aria-controls="ticketsTable" rowspan="1" colspan="1" aria-label="Project Name : activate to sort column ascending" style="width: 55px; outline: none">
+                <th>
                     Project
                 </th>
-                <th class="sorting" tabindex="0" aria-controls="ticketsTable" rowspan="1" colspan="1" aria-label="Assigned Name : activate to sort column ascending" style="width: 55px; outline: none">
-                    Assigned Developer(s)
+                <th>
+                    Assigned Developer
                 </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Title</td>
-                    <td>@item.Owner.DisplayName</td>
-                    <td>@item.Status.Name</td>
-                    <td>@item.Priority.Name</td>
-                    <td>@item.Type.Name</td>
-                    <td>@item.Project.Title</td>
-                    @if (item.AssignedToUser != null)
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("Details", new { id = item.Id })">
+                        @item.Title
+                    </a>
+                    @if (User.IsInRole("Admin,Global Admin") || User.IsInRole("Global Admin") || User.IsInRole("Project Manager") || item.AssignedToUserId == User.Identity.GetUserId())
                     {
-                        <td>@item.AssignedToUser.DisplayName</td>
+                        <a class="glyphicon glyphicon-pencil pull-right" href="@Url.Action("Edit", new { id = item.Id})"
+                           style="text-decoration:none;"></a>
                     }
-                    else
-                    {
-                        <td>None Assigned Currently</td>
-                    }
-                </tr>
-            }
+                </td>
+                <td>@item.Owner.DisplayName</td>
+                <td>@item.Status.Name</td>
+                <td>@item.Priority.Name</td>
+                <td>@item.Type.Name</td>
+                <td>@item.Project.Title</td>
+                @if (item.AssignedToUser != null)
+                {
+                    <td>
+                        @item.AssignedToUser.DisplayName
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        None Assigned Currently
+                    </td>
+                }
+            </tr>
+        }
         </tbody>
     </table>
 </div>
 @section scripts{
     <script>
-        $(document).ready(function () {
-            $('#example').dataTable({
-                "order": [[0, "desc"]]
-            });
-        });
+    $(document).ready(function () {
+        $('#ticketsTable').dataTable();
+    });
     </script>
 }
