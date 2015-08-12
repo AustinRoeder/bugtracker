@@ -39,7 +39,71 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SendGrid.SmtpApi">
       <HintPath>..\packages\SendGrid.SmtpApi.1.3.1\lib\net40\SendGrid.SmtpApi.dll</HintPath>
     </Reference>
@@ -55,6 +119,30 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -72,90 +160,17 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=__MvcPagesVersion__, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="WebGrease">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
-    <Reference Include="Antlr3.Runtime">
-      <Private>True</Private>
-      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Owin">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin">
-      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security">
-      <HintPath>..\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Facebook">
-      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Cookies">
-      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.OAuth">
-      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Google">
-      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Twitter">
-      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
-      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -199,10 +214,18 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\style.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\custom.css" />
+    <Content Include="css\demos\sliders.css" />
+    <Content Include="css\demos\ui-buttons.css" />
+    <Content Include="css\demos\ui-notifications.css" />
+    <Content Include="css\font-awesome.css" />
+    <Content Include="css\font-awesome.min.css" />
+    <Content Include="css\target-admin.css" />
     <Content Include="DataTables-1.10.7\examples\advanced_init\column_render.html" />
     <Content Include="DataTables-1.10.7\examples\advanced_init\complex_header.html" />
     <Content Include="DataTables-1.10.7\examples\advanced_init\defaults.html" />
@@ -501,9 +524,270 @@
     <Content Include="DataTables-1.10.7\media\js\jquery.dataTables.js" />
     <Content Include="DataTables-1.10.7\media\js\jquery.dataTables.min.js" />
     <Content Include="DataTables-1.10.7\media\js\jquery.js" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\avatars\avatar-1-md.jpg" />
+    <Content Include="img\avatars\avatar-1-xs.jpg" />
+    <Content Include="img\avatars\avatar-1.jpg" />
+    <Content Include="img\avatars\avatar-2-md.jpg" />
+    <Content Include="img\avatars\avatar-2-xs.jpg" />
+    <Content Include="img\avatars\avatar-2.jpg" />
+    <Content Include="img\avatars\avatar-large-1.jpg" />
+    <Content Include="img\avatars\avatar-large-2.jpg" />
+    <Content Include="img\gallery\zoom.png" />
+    <Content Include="img\jquery\handle-vertical.png" />
+    <Content Include="img\jquery\handle.png" />
+    <Content Include="img\loaders\ajax-loader.gif" />
+    <Content Include="img\logo-login.png" />
+    <Content Include="img\logo.png" />
+    <Content Include="img\mockup.png" />
+    <Content Include="img\photos\blur-lg.jpg" />
+    <Content Include="img\photos\blur-sm.jpg" />
+    <Content Include="img\photos\clock-lg.jpg" />
+    <Content Include="img\photos\clock-sm.jpg" />
+    <Content Include="img\photos\lens-lg.jpg" />
+    <Content Include="img\photos\lens-sm.jpg" />
+    <Content Include="img\photos\rust-lg.jpg" />
+    <Content Include="img\photos\rust-sm.jpg" />
+    <Content Include="img\pricing\label-editable.png" />
+    <Content Include="img\pricing\label-red.png" />
+    <Content Include="img\pricing\label-yellow.png" />
+    <Content Include="js\demos\buttons.js" />
+    <Content Include="js\demos\calendar.js" />
+    <Content Include="js\demos\charts\flot\area.js" />
+    <Content Include="js\demos\charts\flot\chart1.js" />
+    <Content Include="js\demos\charts\flot\chart2.js" />
+    <Content Include="js\demos\charts\flot\chart3.js" />
+    <Content Include="js\demos\charts\flot\chart4.js" />
+    <Content Include="js\demos\charts\flot\donut.js" />
+    <Content Include="js\demos\charts\flot\horizontal.js" />
+    <Content Include="js\demos\charts\flot\line.js" />
+    <Content Include="js\demos\charts\flot\pie.js" />
+    <Content Include="js\demos\charts\flot\scatter.js" />
+    <Content Include="js\demos\charts\flot\stacked-area.js" />
+    <Content Include="js\demos\charts\flot\stacked-horizontal.js" />
+    <Content Include="js\demos\charts\flot\stacked-vertical.js" />
+    <Content Include="js\demos\charts\flot\vertical.js" />
+    <Content Include="js\demos\charts\morris\area.js" />
+    <Content Include="js\demos\charts\morris\bar.js" />
+    <Content Include="js\demos\charts\morris\donut.js" />
+    <Content Include="js\demos\charts\morris\line.js" />
+    <Content Include="js\demos\dashboard.js" />
+    <Content Include="js\demos\form-extended.js" />
+    <Content Include="js\demos\form-validation.js" />
+    <Content Include="js\demos\sliders.js" />
+    <Content Include="js\demos\ui-notifications.js" />
+    <Content Include="js\libs\bootstrap.js" />
+    <Content Include="js\libs\bootstrap.min.js" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-icons_222222_256x240.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="js\libs\css\ui-lightness\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="js\libs\css\ui-lightness\jquery-ui-1.9.2.custom.css" />
+    <Content Include="js\libs\css\ui-lightness\jquery-ui-1.9.2.custom.min.css" />
+    <Content Include="js\libs\jquery-1.10.1.min.js" />
+    <Content Include="js\libs\jquery-ui-1.9.2.custom.min.js" />
+    <Content Include="js\libs\raphael-2.1.2.min.js" />
+    <Content Include="js\plugins\autosize\jquery.autosize.min.js" />
+    <Content Include="js\plugins\datatables\DT_bootstrap.js" />
+    <Content Include="js\plugins\datatables\img\back_disabled.png" />
+    <Content Include="js\plugins\datatables\img\back_enabled.png" />
+    <Content Include="js\plugins\datatables\img\back_enabled_hover.png" />
+    <Content Include="js\plugins\datatables\img\datatable-row-openclose.png" />
+    <Content Include="js\plugins\datatables\img\favicon.ico" />
+    <Content Include="js\plugins\datatables\img\forward_disabled.png" />
+    <Content Include="js\plugins\datatables\img\forward_enabled.png" />
+    <Content Include="js\plugins\datatables\img\forward_enabled_hover.png" />
+    <Content Include="js\plugins\datatables\img\sort_asc.png" />
+    <Content Include="js\plugins\datatables\img\sort_asc_disabled.png" />
+    <Content Include="js\plugins\datatables\img\sort_both.png" />
+    <Content Include="js\plugins\datatables\img\sort_desc.png" />
+    <Content Include="js\plugins\datatables\img\sort_desc_disabled.png" />
+    <Content Include="js\plugins\datatables\jquery.dataTables.min.js" />
+    <Content Include="js\plugins\datepicker\bootstrap-datepicker.js" />
+    <Content Include="js\plugins\datepicker\datepicker.css" />
+    <Content Include="js\plugins\fileupload\bootstrap-fileupload.css" />
+    <Content Include="js\plugins\fileupload\bootstrap-fileupload.js" />
+    <Content Include="js\plugins\fileupload\bootstrap-fileupload.min.css" />
+    <Content Include="js\plugins\fileupload\bootstrap-fileupload.min.js" />
+    <Content Include="js\plugins\flot\jquery.flot.js" />
+    <Content Include="js\plugins\flot\jquery.flot.orderBars.js" />
+    <Content Include="js\plugins\flot\jquery.flot.pie.js" />
+    <Content Include="js\plugins\flot\jquery.flot.resize.js" />
+    <Content Include="js\plugins\flot\jquery.flot.stack.js" />
+    <Content Include="js\plugins\flot\jquery.flot.tooltip.min.js" />
+    <Content Include="js\plugins\fullcalendar\fullcalendar.css" />
+    <Content Include="js\plugins\fullcalendar\fullcalendar.js" />
+    <Content Include="js\plugins\fullcalendar\fullcalendar.min.js" />
+    <Content Include="js\plugins\fullcalendar\fullcalendar.print.css" />
+    <Content Include="js\plugins\fullcalendar\gcal.js" />
+    <Content Include="js\plugins\howl\howl.js" />
+    <Content Include="js\plugins\howl\howl.min.js" />
+    <Content Include="js\plugins\icheck\jquery.icheck.js" />
+    <Content Include="js\plugins\icheck\jquery.icheck.min.js" />
+    <Content Include="js\plugins\icheck\skins\all.css" />
+    <Content Include="js\plugins\icheck\skins\flat\aero%402x.png" />
+    <Content Include="js\plugins\icheck\skins\flat\aero.css" />
+    <Content Include="js\plugins\icheck\skins\flat\aero.png" />
+    <Content Include="js\plugins\icheck\skins\flat\blue%402x.png" />
+    <Content Include="js\plugins\icheck\skins\flat\blue.css" />
+    <Content Include="js\plugins\icheck\skins\flat\blue.png" />
+    <Content Include="js\plugins\icheck\skins\flat\flat%402x.png" />
+    <Content Include="js\plugins\icheck\skins\flat\flat.css" />
+    <Content Include="js\plugins\icheck\skins\flat\flat.png" />
+    <Content Include="js\plugins\icheck\skins\flat\green%402x.png" />
+    <Content Include="js\plugins\icheck\skins\flat\green.css" />
+    <Content Include="js\plugins\icheck\skins\flat\green.png" />
+    <Content Include="js\plugins\icheck\skins\flat\grey%402x.png" />
+    <Content Include="js\plugins\icheck\skins\flat\grey.css" />
+    <Content Include="js\plugins\icheck\skins\flat\grey.png" />
+    <Content Include="js\plugins\icheck\skins\flat\orange%402x.png" />
+    <Content Include="js\plugins\icheck\skins\flat\orange.css" />
+    <Content Include="js\plugins\icheck\skins\flat\orange.png" />
+    <Content Include="js\plugins\icheck\skins\flat\pink%402x.png" />
+    <Content Include="js\plugins\icheck\skins\flat\pink.css" />
+    <Content Include="js\plugins\icheck\skins\flat\pink.png" />
+    <Content Include="js\plugins\icheck\skins\flat\purple%402x.png" />
+    <Content Include="js\plugins\icheck\skins\flat\purple.css" />
+    <Content Include="js\plugins\icheck\skins\flat\purple.png" />
+    <Content Include="js\plugins\icheck\skins\flat\red%402x.png" />
+    <Content Include="js\plugins\icheck\skins\flat\red.css" />
+    <Content Include="js\plugins\icheck\skins\flat\red.png" />
+    <Content Include="js\plugins\icheck\skins\flat\yellow%402x.png" />
+    <Content Include="js\plugins\icheck\skins\flat\yellow.css" />
+    <Content Include="js\plugins\icheck\skins\flat\yellow.png" />
+    <Content Include="js\plugins\icheck\skins\futurico\futurico%402x.png" />
+    <Content Include="js\plugins\icheck\skins\futurico\futurico.css" />
+    <Content Include="js\plugins\icheck\skins\futurico\futurico.png" />
+    <Content Include="js\plugins\icheck\skins\line\aero.css" />
+    <Content Include="js\plugins\icheck\skins\line\blue.css" />
+    <Content Include="js\plugins\icheck\skins\line\green.css" />
+    <Content Include="js\plugins\icheck\skins\line\grey.css" />
+    <Content Include="js\plugins\icheck\skins\line\line%402x.png" />
+    <Content Include="js\plugins\icheck\skins\line\line.css" />
+    <Content Include="js\plugins\icheck\skins\line\line.png" />
+    <Content Include="js\plugins\icheck\skins\line\orange.css" />
+    <Content Include="js\plugins\icheck\skins\line\pink.css" />
+    <Content Include="js\plugins\icheck\skins\line\purple.css" />
+    <Content Include="js\plugins\icheck\skins\line\red.css" />
+    <Content Include="js\plugins\icheck\skins\line\yellow.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\aero%402x.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\aero.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\aero.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\blue%402x.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\blue.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\blue.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\green%402x.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\green.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\green.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\grey%402x.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\grey.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\grey.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\minimal%402x.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\minimal.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\minimal.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\orange%402x.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\orange.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\orange.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\pink%402x.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\pink.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\pink.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\purple%402x.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\purple.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\purple.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\red%402x.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\red.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\red.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\yellow%402x.png" />
+    <Content Include="js\plugins\icheck\skins\minimal\yellow.css" />
+    <Content Include="js\plugins\icheck\skins\minimal\yellow.png" />
+    <Content Include="js\plugins\icheck\skins\polaris\polaris%402x.png" />
+    <Content Include="js\plugins\icheck\skins\polaris\polaris.css" />
+    <Content Include="js\plugins\icheck\skins\polaris\polaris.png" />
+    <Content Include="js\plugins\icheck\skins\square\aero%402x.png" />
+    <Content Include="js\plugins\icheck\skins\square\aero.css" />
+    <Content Include="js\plugins\icheck\skins\square\aero.png" />
+    <Content Include="js\plugins\icheck\skins\square\blue%402x.png" />
+    <Content Include="js\plugins\icheck\skins\square\blue.css" />
+    <Content Include="js\plugins\icheck\skins\square\blue.png" />
+    <Content Include="js\plugins\icheck\skins\square\green%402x.png" />
+    <Content Include="js\plugins\icheck\skins\square\green.css" />
+    <Content Include="js\plugins\icheck\skins\square\green.png" />
+    <Content Include="js\plugins\icheck\skins\square\grey%402x.png" />
+    <Content Include="js\plugins\icheck\skins\square\grey.css" />
+    <Content Include="js\plugins\icheck\skins\square\grey.png" />
+    <Content Include="js\plugins\icheck\skins\square\orange%402x.png" />
+    <Content Include="js\plugins\icheck\skins\square\orange.css" />
+    <Content Include="js\plugins\icheck\skins\square\orange.png" />
+    <Content Include="js\plugins\icheck\skins\square\pink%402x.png" />
+    <Content Include="js\plugins\icheck\skins\square\pink.css" />
+    <Content Include="js\plugins\icheck\skins\square\pink.png" />
+    <Content Include="js\plugins\icheck\skins\square\purple%402x.png" />
+    <Content Include="js\plugins\icheck\skins\square\purple.css" />
+    <Content Include="js\plugins\icheck\skins\square\purple.png" />
+    <Content Include="js\plugins\icheck\skins\square\red%402x.png" />
+    <Content Include="js\plugins\icheck\skins\square\red.css" />
+    <Content Include="js\plugins\icheck\skins\square\red.png" />
+    <Content Include="js\plugins\icheck\skins\square\square%402x.png" />
+    <Content Include="js\plugins\icheck\skins\square\square.css" />
+    <Content Include="js\plugins\icheck\skins\square\square.png" />
+    <Content Include="js\plugins\icheck\skins\square\yellow%402x.png" />
+    <Content Include="js\plugins\icheck\skins\square\yellow.css" />
+    <Content Include="js\plugins\icheck\skins\square\yellow.png" />
+    <Content Include="js\plugins\magnific\jquery.magnific-popup.js" />
+    <Content Include="js\plugins\magnific\jquery.magnific-popup.min.js" />
+    <Content Include="js\plugins\magnific\magnific-popup.css" />
+    <Content Include="js\plugins\morris\morris.css" />
+    <Content Include="js\plugins\morris\morris.min.js" />
+    <Content Include="js\plugins\nicescroll\jquery.nicescroll.min.js" />
+    <Content Include="js\plugins\parsley\parsley.js" />
+    <Content Include="js\plugins\select2\select2-spinner.gif" />
+    <Content Include="js\plugins\select2\select2.css" />
+    <Content Include="js\plugins\select2\select2.js" />
+    <Content Include="js\plugins\select2\select2.min.js" />
+    <Content Include="js\plugins\select2\select2.png" />
+    <Content Include="js\plugins\select2\select2x2.png" />
+    <Content Include="js\plugins\simplecolorpicker\jquery.simplecolorpicker.css" />
+    <Content Include="js\plugins\simplecolorpicker\jquery.simplecolorpicker.js" />
+    <Content Include="js\plugins\sparkline\jquery.sparkline.min.js" />
+    <Content Include="js\plugins\tableCheckable\jquery.tableCheckable.js" />
+    <Content Include="js\plugins\textarea-counter\jquery.textarea-counter.js" />
+    <Content Include="js\plugins\timepicker\bootstrap-timepicker.css" />
+    <Content Include="js\plugins\timepicker\bootstrap-timepicker.js" />
+    <Content Include="js\target-account.js" />
+    <Content Include="js\target-admin.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="img\Thumbs.db" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="css\bootstrap.css.map" />
+    <Content Include="js\plugins\datatables\img\Sorting icons.psd" />
+    <Content Include="js\plugins\datepicker\less\datepicker.less" />
+    <None Include="Scripts\jquery-2.1.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\perfect-scrollbar.jquery.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome\fontawesome-webfont.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\opensans\OpenSans-Light.svg" />
     <Content Include="fonts\opensans\OpenSans-Regular.svg" />
@@ -511,12 +795,10 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="img\bt.png" />
-    <Content Include="img\switch.png" />
     <Content Include="fonts\fontawesome\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome\FontAwesome.otf" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.woff" />
@@ -558,47 +840,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\aroeder-bugtracker.pubxml" />
     <None Include="Properties\PublishProfiles\aroeder.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="img\users_icon.png" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="Scripts\jquery.multi-select.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\js\bootstrap-select.js" />
-    <Content Include="Scripts\js\i18n\defaults-bg_BG.js" />
-    <Content Include="Scripts\js\i18n\defaults-cs_CZ.js" />
-    <Content Include="Scripts\js\i18n\defaults-da_DK.js" />
-    <Content Include="Scripts\js\i18n\defaults-de_DE.js" />
-    <Content Include="Scripts\js\i18n\defaults-en_US.js" />
-    <Content Include="Scripts\js\i18n\defaults-es_CL.js" />
-    <Content Include="Scripts\js\i18n\defaults-eu.js" />
-    <Content Include="Scripts\js\i18n\defaults-fa_IR.js" />
-    <Content Include="Scripts\js\i18n\defaults-fr_FR.js" />
-    <Content Include="Scripts\js\i18n\defaults-hu_HU.js" />
-    <Content Include="Scripts\js\i18n\defaults-it_IT.js" />
-    <Content Include="Scripts\js\i18n\defaults-ko_KR.js" />
-    <Content Include="Scripts\js\i18n\defaults-nl_NL.js" />
-    <Content Include="Scripts\js\i18n\defaults-pl_PL.js" />
-    <Content Include="Scripts\js\i18n\defaults-pt_BR.js" />
-    <Content Include="Scripts\js\i18n\defaults-pt_PT.js" />
-    <Content Include="Scripts\js\i18n\defaults-ro_RO.js" />
-    <Content Include="Scripts\js\i18n\defaults-ru_RU.js" />
-    <Content Include="Scripts\js\i18n\defaults-sk_SK.js" />
-    <Content Include="Scripts\js\i18n\defaults-sl_SI.js" />
-    <Content Include="Scripts\js\i18n\defaults-sv_SE.js" />
-    <Content Include="Scripts\js\i18n\defaults-tr_TR.js" />
-    <Content Include="Scripts\js\i18n\defaults-ua_UA.js" />
-    <Content Include="Scripts\js\i18n\defaults-zh_CN.js" />
-    <Content Include="Scripts\js\i18n\defaults-zh_TW.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\perfect-scrollbar.js" />
     <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -613,7 +864,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -639,7 +889,6 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Ticket\Index.cshtml" />
     <Content Include="Views\Ticket\Create.cshtml" />
-    <Content Include="Scripts\js\.jshintrc" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Project\Users.cshtml" />
@@ -648,7 +897,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -12,8 +12,11 @@ namespace bug_tracker.Models
         public string EditId { get; set; }
         public string UserId { get; set; }
         public string Property { get; set; }
+        public string PropertyDisplay { get; set; }
         public string OldValue { get; set; }
         public string NewValue { get; set; }
+        public string OldValueDisplay { get; set; }
+        public string NewValueDisplay { get; set; }
         public DateTimeOffset Updated { get; set; }
 
         public virtual Ticket Ticket { get; set; }

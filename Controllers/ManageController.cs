@@ -260,19 +260,13 @@ namespace bug_tracker.Controllers
             {
                 return View(model);
             }
-            var result = await UserManager.SetEmailAsync(User.Identity.GetUserId(), model.NewUsername);
-            if (result.Succeeded)
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            user.DisplayName = model.NewUsername;
+            if (user != null)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                user.UserName = user.Email;
-                if (user != null)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeUsernameSuccess });
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            AddErrors(result);
-            return View(model);
+            return RedirectToAction("Index", new { Message = ManageMessageId.ChangeUsernameSuccess });
         }
 
         //

@@ -60,19 +60,19 @@ namespace bug_tracker.Models
     public class ChangeUsernameViewModel
     {
         [Required]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Current email")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Current UserName")]
         public string OldUsername { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "New email")]
+        [DataType(DataType.Text)]
+        [Display(Name = "New UserName")]
         public string NewUsername { get; set; }
 
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Confirm new email")]
-        [Compare("NewUsername", ErrorMessage = "The new email and confirmation email do not match.")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Confirm new UserName")]
+        [Compare("NewUsername", ErrorMessage = "The new username and confirmation username do not match.")]
         public string ConfirmUsername { get; set; }
     }
 

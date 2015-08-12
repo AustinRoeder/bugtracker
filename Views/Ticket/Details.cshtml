@@ -30,6 +30,54 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Comments</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="col-xs-12" style="margin-bottom: 10px;">
+                        <div class="commentsContainer">
+                            @foreach (var c in Model.Comments.OrderBy(d => d.Created))
+                            {
+                            <!-- Comment -->
+                            <div class="media col-xs-11" style="margin-bottom:20px;">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object" src="http://placehold.it/64x64" alt="">
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        @c.Owner.FirstName
+                                        <small>@c.Created.DateTime</small>
+                                        <span class="pull-right">
+                                            @if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
+                                            {
+                                                <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
+                                                    data-target="#editModal" data-id="@c.Id" data-body="@c.Body" style="text-decoration:none;color:black;"></a>
+                                            }
+                                        </span>
+                                    </h4>
+                                    <h5>@c.Body</h5>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                        <br />
+                    </div>
+                        @if (Model.OwnerId == userId || Model.AssignedToUserId == userId || Model.Project.Users.Any(u => u.Id == userId)) {
+                        <h4>Leave a Comment:</h4>
+                        <form role="form" method="post" action="@Url.Action("CommentCreate")">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="TicketId" value="@Model.Id" />
+                            <textarea name="Body" placeholder="Write your comment here."></textarea><br />
+                            <button type="submit" class="btn btn-primary grey-gradient" style="margin-bottom:10px;">Submit</button>
+                        </form>
+                        }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Histories</a>
                 </h4>
             </div>
@@ -62,10 +110,10 @@
                                     foreach (var history in Model.Histories)
                                     {
                                         <tr>
-                                            <td>@history.User.DisplayName</td>
+                                            <td>@history.User.Email</td>
                                             <td>@history.Property</td>
-                                            <td>@history.OldValue</td>
-                                            <td>@history.NewValue</td>
+                                            <td>@history.OldValueDisplay</td>
+                                            <td>@history.NewValueDisplay</td>
                                             <td>@history.Updated.LocalDateTime</td>
                                         </tr>
                                     }
@@ -73,51 +121,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Comments</a>
-                </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse">
-                <div class="panel-body">
-                    @if (Model.OwnerId == userId || Model.AssignedToUserId == userId || Model.Project.Users.Any(u => u.Id == userId)) { 
-                        <div class="col-xs-12" style="margin-bottom: 10px;">
-                            <h4>Leave a Comment:</h4>
-                            <form role="form" method="post" action="@Url.Action("CommentCreate")">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="TicketId" value="@Model.Id" />
-                                <textarea name="Body" placeholder="Write your comment here."></textarea><br />
-                                <button type="submit" class="btn btn-primary grey-gradient" style="margin-bottom:10px;">Submit</button>
-                            </form>
-                        </div>
-                    }
-                    @foreach (var c in Model.Comments.OrderByDescending(d => d.Created))
-                    {
-            <!-- Comment -->
-                        <div class="media col-xs-11" style="margin-bottom:20px;">
-                            <a class="pull-left" href="#">
-                                <img class="media-object" src="http://placehold.it/64x64" alt="">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading">
-                                    @c.Owner.FirstName
-                                    <small>@c.Created.DateTime</small>
-                                </h4>
-                                @c.Body
-                            </div>
-                        </div>
-                        <div class="col-xs-1">
-                            @if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
-                            {
-                                <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
-                                   data-target="#editModal" data-id="@c.Id" data-body="@c.Body" style="text-decoration:none;color:black;"></a>
-                            }
-                        </div>
-                    }
                 </div>
             </div>
         </div>
@@ -189,6 +192,7 @@
                 $('#Edit-Id').attr('value', $(this).data('id'));
                 $('#body').text($(this).data('body'));
             })
+            
         });
     </script>
 }

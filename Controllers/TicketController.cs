@@ -19,11 +19,10 @@ namespace bug_tracker.Controllers
         ApplicationDbContext db = new ApplicationDbContext();
         UserRolesHelper helper = new UserRolesHelper();
 
-        public ActionResult Index(string checkedVal)
+        public ActionResult Index()
         {
             var user = db.Users.Find(User.Identity.GetUserId());
             ViewBag.Devs = helper.UsersInRole("Developer");
-            ViewBag.Checked = checkedVal;
             if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
             {
                 return View(db.Tickets.ToList());
@@ -34,11 +33,17 @@ namespace bug_tracker.Controllers
             }
             else if (User.IsInRole("Developer"))
             {
-                if(ViewBag.Checked != null && ViewBag.Checked == "checked")
+                var dbTickets = db.Tickets.Where(t => t.AssignedToUserId == user.Id).ToList();
+                List<Ticket> tickets = user.Projects.SelectMany(p=>p.Tickets).ToList();
+                foreach (var t in dbTickets)
                 {
-                    return View(user.Projects.SelectMany(p => p.Tickets.Where(t=>t.AssignedToUserId == user.Id)).ToList());
+                    if (!tickets.Contains(t))
+                    {
+                        tickets.Add(t);
+                    }
                 }
-                return View(user.Projects.SelectMany(p=>p.Tickets).ToList());
+                
+                return View(tickets);
             }
             else
             {
@@ -89,119 +94,180 @@ namespace bug_tracker.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Desc,StatusId,TypeId,PriorityId,ProjectId,AssignedToUserId")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "Id,Title,Desc,Created,Updated,ProjectId,AssignedToUserId,TypeId,PriorityId,StatusId")] Ticket ticket)
         {
-            var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
-            var Editor = db.Users.Find(User.Identity.GetUserId());
-            var properties = new List<string>();
-            //Checks for Ticket History
-            if (oldTicket.Title != ticket.Title)
+            var editable = new List<string>() { "Title", "Desc" };
+            if (User.IsInRole("Admin"))
+                editable.AddRange(new string[] { "ProjectId", "AssignedToUserId", "TypeId", "PriorityId", "StatusId" });
+            if (User.IsInRole("Project Manager"))
+                editable.AddRange(new string[] { "AssignedToUserId", "TypeId", "PriorityId", "StatusId" });
+
+            if (ModelState.IsValid)
             {
-                properties.Add("Title");
-                var history = new THistory()
+                var oldTicket = db.Tickets.AsNoTracking()
+                    .FirstOrDefault(t => t.Id == ticket.Id);
+                var histories = GetTHistories(oldTicket, ticket)
+                    .Where(h => editable.Contains(h.History.Property));
+
+                var mailer = new EmailService();
+
+                foreach (var item in histories)
                 {
-                    TicketId = ticket.Id,
-                    Property = "Title",
-                    OldValue = oldTicket.Title,
-                    NewValue = ticket.Title,
-                    User = Editor,
-                    Updated = DateTimeOffset.Now.LocalDateTime
-                };
-                db.THistories.Add(history);
-            }
-            if (oldTicket.Desc != ticket.Desc)
-            {
-                properties.Add("Desc");
-                var history = new THistory()
-                {
-                    TicketId = ticket.Id,
-                    Property = "Description",
-                    OldValue = oldTicket.Desc,
-                    NewValue = ticket.Desc,
-                    User = Editor,
-                    Updated = DateTimeOffset.Now.LocalDateTime
-                };
-                db.THistories.Add(history);
-            }
-            if (oldTicket.StatusId != ticket.StatusId)
-            {
-                properties.Add("StatusId");
-                var history = new THistory()
-                {
-                    TicketId = ticket.Id,
-                    Property = "Status",
-                    OldValue = oldTicket.Status.Name,
-                    NewValue = db.TStatuses.Find(ticket.StatusId).Name,
-                    User = Editor,
-                    Updated = DateTimeOffset.Now.LocalDateTime
-                };
-                db.THistories.Add(history);
-            }
-            if (oldTicket.TypeId != ticket.TypeId)
-            {
-                properties.Add("TypeId");
-                var history = new THistory()
-                {
-                    TicketId = ticket.Id,
-                    Property = "Type",
-                    OldValue = oldTicket.Type.Name,
-                    NewValue = db.TTypes.Find(ticket.TypeId).Name,
-                    User = Editor,
-                    Updated = DateTimeOffset.Now.LocalDateTime
-                };
-                db.THistories.Add(history);
-            }
-            if (oldTicket.PriorityId != ticket.PriorityId)
-            {
-                properties.Add("PriorityId");
-                var history = new THistory()
-                {
-                    TicketId = ticket.Id,
-                    Property = "Priority",
-                    OldValue = oldTicket.Priority.Name,
-                    NewValue = db.TPriorities.Find(ticket.PriorityId).Name,
-                    User = Editor,
-                    Updated = DateTimeOffset.Now.LocalDateTime
-                };
-                db.THistories.Add(history);
-            }
-            if (oldTicket.ProjectId != ticket.ProjectId)
-            {
-                properties.Add("ProjectId");
-                var history = new THistory()
-                {
-                    TicketId = ticket.Id,
-                    Property = "Project",
-                    OldValue = oldTicket.Project.Title,
-                    NewValue = db.Projects.Find(ticket.ProjectId).Title,
-                    User = Editor,
-                    Updated = DateTimeOffset.Now.LocalDateTime
-                };
-                db.THistories.Add(history);
-            }
-            if (User.IsInRole("Admin") || User.IsInRole("Global Admin") || User.IsInRole("Project Manager"))
-            {
-                if (oldTicket.AssignedToUserId != ticket.AssignedToUserId)
-                {
-                    properties.Add("AssignedToUserId");
-                    var oldUsername = oldTicket.AssignedToUser != null ? oldTicket.AssignedToUser.DisplayName : "Unassigned";
-                    var history = new THistory()
-                    {
-                        TicketId = ticket.Id,
-                        Property = "Assigned User",
-                        OldValue = oldUsername,
-                        NewValue = db.Users.Find(ticket.AssignedToUserId).DisplayName,
-                        User = Editor,
-                        Updated = DateTimeOffset.Now.LocalDateTime
-                    };
-                    db.THistories.Add(history);
+                    db.THistories.Add(item.History);
+                    if (item.Notification != null)
+                        mailer.SendAsync(item.Notification);
                 }
+
+                db.Update(ticket, editable.ToArray());
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            return View(ticket);
+        }
+
+        private List<THistoryWithNotification> GetTHistories(Ticket oldTicket, Ticket newTicket)
+        {
+            var histories = new List<THistoryWithNotification>();
+            var newUser = db.Users.Find(newTicket.AssignedToUserId);
+            
+            if (oldTicket.AssignedToUserId != newTicket.AssignedToUserId)
+            {
+                var oldUser = oldTicket.AssignedToUserId != null ? db.Users.Find(oldTicket.AssignedToUserId).UserName : "Unassigned";
+                histories.Add(new THistoryWithNotification()
+                {
+                    History = new THistory()
+                    {
+                        TicketId = newTicket.Id,
+                        UserId = newUser.Id,
+                        Property = "AssignedToUserId",
+                        PropertyDisplay = "Assigned User",
+                        OldValue = oldTicket.AssignedToUserId,
+                        OldValueDisplay = oldUser,
+                        NewValue = newTicket.AssignedToUserId,
+                        NewValueDisplay = newUser.UserName
+                    },
+                    Notification = newUser != null ? new IdentityMessage()
+                    {
+                        Subject = "You have a new Notification",
+                        Destination = newUser.Email,
+                        Body = "You have been assigned to a new ticket with Id " + newTicket.Id + "!"
+                    } : null
+                });
+            }
+            if(oldTicket.Desc != newTicket.Desc)
+               histories.Add(new THistoryWithNotification()
+               {
+                   History = new THistory()
+                   {
+                       TicketId = newTicket.Id,
+                       UserId = newUser.Id,
+                       Property = "Desc",
+                       PropertyDisplay = "Description",
+                       OldValue = oldTicket.Desc,
+                       OldValueDisplay = oldTicket.Desc,
+                       NewValue = newTicket.Desc,
+                       NewValueDisplay = newTicket.Desc
+                   },
+                   Notification = null
+               });
+            if(oldTicket.Title != newTicket.Title)
+               histories.Add(new THistoryWithNotification()
+               {
+                   History = new THistory()
+                   {
+                       TicketId = newTicket.Id,
+                       UserId = newUser.Id,
+                       Property = "Title",
+                       PropertyDisplay = "Title",
+                       OldValue = oldTicket.Title,
+                       OldValueDisplay = oldTicket.Desc,
+                       NewValue = newTicket.Title,
+                       NewValueDisplay = newTicket.Desc
+                   },
+                   Notification = null
+               });
+            if(oldTicket.PriorityId != newTicket.PriorityId)
+                histories.Add(new THistoryWithNotification()
+                {
+                    History = new THistory()
+                    {
+                        TicketId = newTicket.Id,
+                        UserId = newUser.Id,
+                        Property = "PriorityId",
+                        PropertyDisplay = "Priority",
+                        OldValue = oldTicket.PriorityId.ToString(),
+                        OldValueDisplay = oldTicket.Priority.Name,
+                        NewValue = newTicket.PriorityId.ToString(),
+                        NewValueDisplay = db.TPriorities.Find(newTicket.PriorityId).Name
+                    },
+                    Notification = null
+                });
+            if(oldTicket.StatusId != newTicket.StatusId)
+                histories.Add(new THistoryWithNotification()
+                {
+                    History = new THistory()
+                    {
+                        TicketId = newTicket.Id,
+                        UserId = newUser.Id,
+                        Property = "StatusId",
+                        PropertyDisplay = "Status",
+                        OldValue = oldTicket.StatusId.ToString(),
+                        OldValueDisplay = oldTicket.Status.Name,
+                        NewValue = newTicket.StatusId.ToString(),
+                        NewValueDisplay = db.TStatuses.Find(newTicket.StatusId).Name
+                    },
+                    Notification = null
+                });
+            if (oldTicket.TypeId != newTicket.TypeId)
+                histories.Add(new THistoryWithNotification()
+                {
+                    History = new THistory()
+                    {
+                        TicketId = newTicket.Id,
+                        UserId = newUser.Id,
+                        Property = "TypeId",
+                        PropertyDisplay = "Type",
+                        OldValue = oldTicket.TypeId.ToString(),
+                        OldValueDisplay = oldTicket.Type.Name,
+                        NewValue = newTicket.TypeId.ToString(),
+                        NewValueDisplay = db.TTypes.Find(newTicket.TypeId).Name
+                    },
+                    Notification = null
+                });
+            if (oldTicket.ProjectId != newTicket.ProjectId)
+            {
+                var newProject = db.Projects.Find(newTicket.ProjectId);
+                histories.Add(new THistoryWithNotification()
+                {
+                    History = new THistory()
+                    {
+                        TicketId = newTicket.Id,
+                        UserId = newUser.Id,
+                        Property = "ProjectId",
+                        PropertyDisplay = "Project",
+                        OldValue = oldTicket.ProjectId.ToString(),
+                        OldValueDisplay = oldTicket.Project.Title,
+                        NewValue = newTicket.ProjectId.ToString(),
+                        NewValueDisplay = db.Projects.Find(newTicket.ProjectId).Title
+                    },
+                    Notification = newProject != null ? new IdentityMessage()
+                    {
+                        Subject = "You have a new Notification",
+                        Destination = newUser.Email,
+                        Body = "A ticket assigned to you has been moved to a different project" +
+                                        " of Id " + newProject.Id + "!"
+                    } : null
+                });
             }
 
-            ticket.Updated = DateTimeOffset.Now.LocalDateTime;
-            db.Update(ticket,properties.ToArray());
-            await db.SaveChangesAsync();
-            return RedirectToAction("Details", new { id = ticket.Id});
+            return histories;
+        }
+
+        private class THistoryWithNotification
+        {
+            public THistory History { get; set; }
+            public IdentityMessage Notification { get; set; }
         }
         public ActionResult Details(int? id)
         {
@@ -229,6 +295,14 @@ namespace bug_tracker.Controllers
                 comment.Created = DateTimeOffset.Now;
                 db.TComments.Add(comment);
                 db.SaveChanges();
+                var ticketUrl = Url.Action("Details", "Ticket", new { id = comment.TicketId }, protocol: Request.Url.Scheme);
+                var mailer = new EmailService();
+                mailer.SendAsync(new IdentityMessage
+                {
+                    Subject = "You have a new Notification",
+                    Destination = comment.Ticket.AssignedToUser.Email,
+                    Body = "Your ticket," + comment.Ticket.Title + ", has a new comment! Visit the ticket <a href=\"" + ticketUrl + "\">here</a>"                    
+                });
                 return RedirectToAction("Details", new { id = ticket.Id });
             }
             return RedirectToAction("Index");
@@ -245,7 +319,7 @@ namespace bug_tracker.Controllers
                 db.Update(comment, "Body");
                 db.SaveChanges();
             }
-            return View("Details", new { id = ticket.Id });
+            return RedirectToAction("Details", new { id = ticket.Id });
         }
         [HttpPost]
         [Authorize]
@@ -264,6 +338,7 @@ namespace bug_tracker.Controllers
                 {
                     var filePath = "/Uploads/";
                     var absPath = Server.MapPath("~" + filePath);
+                    Directory.CreateDirectory(absPath);
                     attachment.FilePath = filePath;
                     attachment.TicketId = ticket.Id;
                     attachment.UserId = User.Identity.GetUserId();
@@ -273,8 +348,15 @@ namespace bug_tracker.Controllers
                     db.TAttachments.Add(attachment);
                     db.SaveChanges();
                 }
+                var ticketUrl = Url.Action("Details", "Ticket", new { id = attachment.TicketId }, protocol: Request.Url.Scheme);
+                var mailer = new EmailService();
+                mailer.SendAsync(new IdentityMessage
+                {
+                    Subject = "You have a new Notification",
+                    Destination = attachment.Ticket.AssignedToUser.Email,
+                    Body = "Your ticket," + attachment.Ticket.Title + ", has a new attachment! Visit the ticket <a href=\"" + ticketUrl + "\">here</a>"
+                });
             }
-            //return RedirectToAction("Index");
             return RedirectToAction("Details", new { id = ticket.Id });
         }
     }

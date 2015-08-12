@@ -11,7 +11,7 @@
     List<SelectListItem> devs = new List<SelectListItem>();
     for (var i = 0; i < devArr.Count; i++)
     {
-        devs.Add(new SelectListItem { Value = devArr[i].Id.ToString(), Text = devArr[i].DisplayName });
+        devs.Add(new SelectListItem { Value = devArr[i].Id.ToString(), Text = devArr[i].Email });
     }
 }
 <div class="container">
