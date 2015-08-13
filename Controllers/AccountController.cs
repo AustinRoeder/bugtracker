@@ -154,7 +154,8 @@ namespace bug_tracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var dn = model.DisplayName != null ? model.DisplayName : model.Email.Split('@').First();
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, DisplayName = dn };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -393,7 +394,6 @@ namespace bug_tracker.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();

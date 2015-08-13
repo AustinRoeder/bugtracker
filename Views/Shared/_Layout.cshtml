@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,21 +7,24 @@
     @Styles.Render("~/Content/css")
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300,700" />
-    <link rel="stylesheet" href="./css/font-awesome.min.css" />
-    <link rel="stylesheet" href="./js/libs/css/ui-lightness/jquery-ui-1.9.2.custom.min.css" />
-    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/js/libs/css/ui-lightness/jquery-ui-1.9.2.custom.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <!-- Plugin CSS -->
-    <link rel="stylesheet" href="./js/plugins/morris/morris.css" />
-    <link rel="stylesheet" href="./js/plugins/icheck/skins/minimal/blue.css" />
-    <link rel="stylesheet" href="./js/plugins/select2/select2.css" />
-    <link rel="stylesheet" href="./js/plugins/fullcalendar/fullcalendar.css" />
+    <link rel="stylesheet" href="~/js/plugins/morris/morris.css" />
+    <link rel="stylesheet" href="~/js/plugins/icheck/skins/minimal/blue.css" />
+    <link rel="stylesheet" href="~/js/plugins/select2/select2.css" />
+    <link rel="stylesheet" href="~/js/plugins/fullcalendar/fullcalendar.css" />
     <!-- App CSS -->
-    <link rel="stylesheet" href="./css/target-admin.css" />
-    <link rel="stylesheet" href="./css/custom.css" />
+    <link rel="stylesheet" href="~/css/target-admin.css" />
+    <link rel="stylesheet" href="~/css/custom.css" />
     <link href="~/Content/multi-select.css" rel="stylesheet" />
+    <link href="~/Content/Style.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @using Microsoft.AspNet.Identity;
+    @using bug_tracker.Helpers;
     <div class="navbar">
         <div class="container">
             <div class="navbar-header">
@@ -29,7 +32,7 @@
                     <i class="fa fa-cogs"></i>
                 </button>
                 <a class="navbar-brand navbar-brand-image" href="">
-                    <img src="./img/logo.png" alt="Site Logo" />
+                    <img src="~/img/logo.png" alt="Site Logo" />
                 </a>
             </div> <!-- /.navbar-header -->
             <div class="navbar-collapse collapse">
@@ -79,214 +82,106 @@
                             </li>
                         </ul>
                     </li>
-
-                    <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-envelope"></i>
-                            <span class="navbar-visible-collapsed">&nbsp;Messages&nbsp;</span>
-                        </a>
-                        <ul class="dropdown-menu noticebar-menu" role="menu">
-                            <li class="nav-header">
-                                <div class="pull-left">
-                                    Messages
-                                </div>
-                                <div class="pull-right">
-                                    <a href="javascript:;">New Message</a>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="" class="noticebar-item">
-                                    <span class="noticebar-item-image">
-                                        <img src="./img/avatars/avatar-1-md.jpg" style="width: 50px" alt="" />
-                                    </span>
-                                    <span class="noticebar-item-body">
-                                        <strong class="noticebar-item-title">New Message</strong>
-                                        <span class="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-                                        <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 20 minutes ago</span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="noticebar-item">
-                                    <span class="noticebar-item-image">
-                                        <img src="./img/avatars/avatar-2-md.jpg" style="width: 50px" alt="" />
-                                    </span>
-                                    <span class="noticebar-item-body">
-                                        <strong class="noticebar-item-title">New Message</strong>
-                                        <span class="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-                                        <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 5 hours ago</span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="noticebar-menu-view-all">
-                                <a href="">View All Messages</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-exclamation-triangle"></i>
-                            <span class="navbar-visible-collapsed">&nbsp;Alerts&nbsp;</span>
-                        </a>
-                        <ul class="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">
-                            <li class="nav-header">
-                                <div class="pull-left">
-                                    Alerts
-                                </div>
-                            </li>
-                            <li class="noticebar-empty">
-                                <h4 class="noticebar-empty-title">No alerts here.</h4>
-                                <p class="noticebar-empty-text">Check out what other makers are doing on Explore!</p>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="javascript:;">About</a>
-                    </li>
-
-                    <li>
-                        <a href="javascript:;">Resources</a>
-                    </li>
                     <li class="dropdown navbar-profile">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
-                            <img src="./img/avatars/avatar-1-xs.jpg" class="navbar-profile-avatar" alt="" />
-                            <span class="navbar-profile-label">rod@rod.me &nbsp;</span>
+                            <img src="~/img/users_icon.png" class="navbar-profile-avatar" alt="" />
+                            <span>@User.Identity.GetName() &nbsp;</span>
                             <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu" role="menu">
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index","Manage")">
+                                        <i class="fa fa-user"></i>
+                                        &nbsp;&nbsp;My Profile
+                                    </a>
+                                </li>
                             <li>
-                                <a href="">
-                                    <i class="fa fa-user"></i>
-                                    &nbsp;&nbsp;My Profile
-                                </a>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                {
+                                    
+                                    <a href="javascript:document.getElementById('logoutForm').submit()" style="text-decoration: none">                                       
+                                        <i class="fa fa-sign-out"></i>
+                                        &nbsp;&nbsp;Log off
+                                    </a>
+                                }
                             </li>
-                            <li>
-                                <a href="">
-                                    <i class="fa fa-dollar"></i>
-                                    &nbsp;&nbsp;Plans &amp; Billing
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="fa fa-cogs"></i>
-                                    &nbsp;&nbsp;Settings
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="">
-                                    <i class="fa fa-sign-out"></i>
-                                    &nbsp;&nbsp;Logout
-                                </a>
-                            </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                                </li>
+                            }
                         </ul>
                     </li>
                 </ul>
             </div> <!--/.navbar-collapse -->
         </div> <!-- /.container -->
     </div> <!-- /.navbar -->
-    @RenderBody()
-    <footer class="footer">
+    <div class="mainbar">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <h4>About Theme</h4>
-                    <br />
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <hr />
-                    <p>&copy; 2014 Jumpstart Themes.</p>
-                </div> <!-- /.col -->
-                <div class="col-sm-3">
-                    <h4>Support</h4>
-                    <br />
-                    <ul class="icons-list">
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Frequently Asked Questions</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Ask a Question</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Video Tutorial</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Feedback</a>
-                        </li>
-                    </ul>
-                </div> <!-- /.col -->
-                <div class="col-sm-3">
-                    <h4>Legal</h4>
-                    <br />
-                    <ul class="icons-list">
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">License</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Terms of Use</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Privacy Policy</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Security</a>
-                        </li>
-                    </ul>
-                </div> <!-- /.col -->
-                <div class="col-sm-3">
-                    <h4>Settings</h4>
-                    <br />
-                    <ul class="icons-list">
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Consectetur adipisicing</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Eiusmod tempor </a>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Fugiat nulla pariatur</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-right icon-li"></i>
-                            <a href="javascript:;">Officia deserunt</a>
-                        </li>
-                    </ul>
-                </div> <!-- /.col -->
-            </div> <!-- /.row -->
+            <button type="button" class="btn mainbar-toggle" data-toggle="collapse" data-target=".mainbar-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="mainbar-collapse collapse">
+                <ul class="nav navbar-nav mainbar-nav">
+                    <li class=@(ViewBag.Title == "Home Index" ? "active" : "")>
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="fa fa-dashboard"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class=@(ViewBag.Title.Contains("Ticket") ? "active" : "")>
+                        <a href="@Url.Action("Index", "Ticket")">
+                            <i class="fa fa-ticket" ></i>
+                            Tickets
+                        </a>
+                    </li>
+                    <li class=@(ViewBag.Title.Contains("Project") ? "active" : "")>
+                        <a href="@Url.Action("Index", "Project")">
+                            <i class="fa fa-folder-open" ></i>
+                            Projects
+                        </a>
+                    </li>
+                </ul>
+            </div> <!-- /.navbar-collapse -->
         </div> <!-- /.container -->
-    </footer> <!-- /.footer -->
+    </div> <!-- /.mainbar -->
+    <div class="container">
+        <div class="content">
+            <div class="content-container">
+                @RenderBody()
+        </div> <!-- /.content-container -->
+    </div> <!-- /.content -->
+</div> <!-- /.container -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <!-- Plugin JS -->
-    <script src="./js/plugins/icheck/jquery.icheck.js"></script>
-    <script src="./js/plugins/select2/select2.js"></script>
-    <script src="./js/libs/raphael-2.1.2.min.js"></script>
-    <script src="./js/plugins/morris/morris.min.js"></script>
-    <script src="./js/plugins/sparkline/jquery.sparkline.min.js"></script>
-    <script src="./js/plugins/nicescroll/jquery.nicescroll.min.js"></script>
-    <script src="./js/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/js/plugins/icheck/jquery.icheck.js"></script>
+    <script src="~/js/plugins/select2/select2.js"></script>
+    <script src="~/js/libs/raphael-2.1.2.min.js"></script>
+    <script src="~/js/plugins/morris/morris.min.js"></script>
+    <script src="~/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/js/plugins/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="~/js/plugins/fullcalendar/fullcalendar.min.js"></script>
     <!-- App JS -->
-    <script src="./js/target-admin.js"></script>
+    <script src="~/js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/js/plugins/datatables/DT_bootstrap.js"></script>
 
     <!-- Plugin JS -->
-    <script src="./js/demos/dashboard.js"></script>
-    <script src="./js/demos/calendar.js"></script>
-    <script src="./js/demos/charts/morris/area.js"></script>
-    <script src="./js/demos/charts/morris/donut.js"></script>
+    <script src="~/js/demos/dashboard.js"></script>
+    <script src="~/js/demos/calendar.js"></script>
+    <script src="~/js/demos/charts/morris/area.js"></script>
+    <script src="~/js/demos/charts/morris/donut.js"></script>
     <script src="~/Scripts/jquery.multi-select.js"></script>
+    <script src="~/js/target-admin.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

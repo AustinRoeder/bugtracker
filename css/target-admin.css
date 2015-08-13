@@ -355,7 +355,8 @@ fieldset[disabled] .btn-twitter.active {
   margin-right: .5em;
   margin-left: .5em;
 }
-.dropdown-menu > li > a {
+.dropdown-menu > li > a,
+.dropdown-menu > li > form > a{
   padding: 6px 7px;
   font-size: 13px;
   border-top-right-radius: 4px;
@@ -370,7 +371,9 @@ fieldset[disabled] .btn-twitter.active {
   text-transform: uppercase;
 }
 .dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > form > a:hover,
+.dropdown-menu > li > form > a:focus {
   color: #fff;
   background-color: #e74c3c;
 }
@@ -385,7 +388,7 @@ fieldset[disabled] .btn-twitter.active {
     color: #083d33;
     font-size: 13px;
   }
-  .dropdown-menu > li > a {
+  .dropdown-menu > li > a, .dropdown-menu > li > form > a{
     color: #fff;
   }
   .navbar-nav .open .dropdown-menu > li > a,
@@ -3174,7 +3177,7 @@ ul.support-list li {
   margin-left: 2.5em;
 }
 .scrollable-panel {
-  height: 300px;
+  height: 392px;
   overflow-y: hidden;
   outline: none;
 }

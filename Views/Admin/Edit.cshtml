@@ -1,9 +1,9 @@
 ﻿@model bug_tracker.Models.RoleManager
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Admin's Edit";
 }
 <section class="content-wrap">
-    <h2>Manage @Model.RoleName Role</h2>
+    <h2>Manage '@Model.RoleName' Role</h2>
     <hr />
     <div class="row">
         <div class="col-sm-10">
@@ -16,7 +16,6 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-12">
-                                <p>Manage Users:</p>
                                 @using (Html.BeginForm())
                                 {
                                     @Html.HiddenFor(model => model.RoleName)

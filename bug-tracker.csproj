@@ -188,6 +188,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CustomExtensions.cs" />
     <Compile Include="Helpers\DbExtensions.cs" />
     <Compile Include="Helpers\UserRolesHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Models\TComment.cs" />
     <Compile Include="Models\THistory.cs" />
     <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\TicketChartDetails.cs" />
     <Compile Include="Models\TPriority.cs" />
     <Compile Include="Models\TStatus.cs" />
     <Compile Include="Models\TType.cs" />
@@ -217,6 +219,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Style.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\custom.css" />
@@ -552,6 +555,9 @@
     <Content Include="img\pricing\label-editable.png" />
     <Content Include="img\pricing\label-red.png" />
     <Content Include="img\pricing\label-yellow.png" />
+    <Content Include="img\project_icon.png" />
+    <Content Include="img\switch.png" />
+    <Content Include="img\ticket_icon.png" />
     <Content Include="js\demos\buttons.js" />
     <Content Include="js\demos\calendar.js" />
     <Content Include="js\demos\charts\flot\area.js" />

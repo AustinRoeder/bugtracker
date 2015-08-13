@@ -61,17 +61,17 @@ namespace bug_tracker.Models
     {
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Current UserName")]
+        [Display(Name = "Current Display Name")]
         public string OldUsername { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Text)]
-        [Display(Name = "New UserName")]
+        [Display(Name = "New Display Name")]
         public string NewUsername { get; set; }
 
         [DataType(DataType.Text)]
-        [Display(Name = "Confirm new UserName")]
+        [Display(Name = "Confirm new Display Name")]
         [Compare("NewUsername", ErrorMessage = "The new username and confirmation username do not match.")]
         public string ConfirmUsername { get; set; }
     }

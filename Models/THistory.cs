@@ -7,6 +7,10 @@ namespace bug_tracker.Models
 {
     public class THistory
     {
+        public THistory()
+        {
+            Updated = DateTimeOffset.Now.LocalDateTime;
+        }
         public int Id { get; set; }
         public int TicketId { get; set; }
         public string EditId { get; set; }

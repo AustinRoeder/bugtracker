@@ -46,7 +46,7 @@ namespace bug_tracker.Controllers
                 {
                     RoleId = db.Roles.FirstOrDefault(r => r.Name == RoleName).Id,
                     RoleName = RoleName,
-                    Users = new MultiSelectList(db.Users.ToList(), "Id", "Email", usersInRole),
+                    Users = new MultiSelectList(db.Users.ToList(), "Id", "DisplayName", usersInRole),
                 };
 
                 return View(model);

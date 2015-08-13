@@ -97,7 +97,7 @@ namespace bug_tracker.Controllers
         public ActionResult Edit([Bind(Include = "Id,Title,Desc,Created,Updated,ProjectId,AssignedToUserId,TypeId,PriorityId,StatusId")] Ticket ticket)
         {
             var editable = new List<string>() { "Title", "Desc" };
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
                 editable.AddRange(new string[] { "ProjectId", "AssignedToUserId", "TypeId", "PriorityId", "StatusId" });
             if (User.IsInRole("Project Manager"))
                 editable.AddRange(new string[] { "AssignedToUserId", "TypeId", "PriorityId", "StatusId" });

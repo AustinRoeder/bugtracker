@@ -3,71 +3,92 @@
 @{
     ViewBag.Title = "Project Index";
 }
-
-<h2>Projects</h2>
-@if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
-{ 
-    var form = "<form method=\"post\" action=\"" + Url.Action("Create") + "\">" +
-                    Html.AntiForgeryToken().ToString() +
-                    "<input type=\"text\" name=\"Title\" placeholder=\"Title of new project*\" />" +
-                    "<button type=\"submit\">Create</button>" +
-                "</form>";
-        <a id="projCreate" href="#" data-toggle="popover" data-trigger="click" 
-            style="cursor:pointer;text-decoration:none;color:darkblue;" title="Project Creation" data-content="@form" data-html="true">
-            Create A Project
-        </a>
-}
-<table class="no-footer display" id="projectsTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tickets)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Users)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <div class="row">
-                    <div class="col-xs-6">
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </div>
-                    <div class="col-xs-2 pull-right">
-                        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
-                        {
-                        <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
-                           data-target="#editModal" data-id="@item.Id" data-title="@item.Title" style="text-decoration:none;"></a>
-                        }
-                    </div>
-                </div>
-            </td>
-            <td style="text-align:center">
-                @Html.DisplayFor(modelItem => item.Tickets.Count)
-            </td>
-            <td>
-                <div class="col-xs-9">
-                    @foreach (var user in item.Users) { 
-                        @Html.DisplayFor(modelItem => user.DisplayName)
-                        <br />
-                    }
-                </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet">
+            <div class="portlet-header">
+                <h3>
+                    <i class="fa fa-folder"></i>
+                    Projects
+                </h3>
                 @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
-                { 
-                <a class="col-xs-2 pull-right glyphicon glyphicon-plus" href="@Url.Action("Users", new { id = item.Id})" style="text-decoration:none;"></a>
+                {
+                    var form = "<form method=\"post\" action=\"" + Url.Action("Create") + "\">" +
+                                    Html.AntiForgeryToken().ToString() +
+                                    "<input type=\"text\" name=\"Title\" placeholder=\"Title of new project*\" />" +
+                                    "<button type=\"submit\">Create</button>" +
+                                "</form>";
+                        <a id="projCreate" href="#" data-toggle="popover" data-trigger="click" class="pull-right" data-placement="left"
+                            style="cursor:pointer;text-decoration:none;color:blue;" title="Project Creation" data-content="@form" data-html="true">
+                            New
+                        </a>
                 }
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+            </div> <!-- /.portlet-header -->
+            <div class="portlet-content">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover table-highlight table-checkable"
+                           data-provide="datatable"
+                           data-display-rows="10"
+                           data-info="true"
+                           data-search="true"
+                           data-length-change="true"
+                           data-paginate="true">
+                        <thead>
+                            <tr>
+                                <th width="1px;">Edit</th>
+                                <th data-filterable="true" data-sortable="true" data-direction="asc">Title</th>
+                                <th data-filterable="true" data-sortable="true">Tickets</th>
+                                <th data-filterable="true" data-sortable="true">Users</th>
+                                <th width="12%">Add Users</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>    
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
+                                    {
+                                            <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
+                                               data-target="#editModal" data-id="@item.Id" data-title="@item.Title" style="text-decoration:none;"></a>
+                                    }
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                @Html.DisplayFor(modelItem => item.Title)
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center">
+                                        @Html.DisplayFor(modelItem => item.Tickets.Count)
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-9">
+                                            @foreach (var user in item.Users)
+                                            {
+                                                @Html.DisplayFor(modelItem => user.DisplayName)
+                                                <br />
+                                            }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
+                                        {
+                                            <div style="text-align:center">
+                                                <a class="glyphicon glyphicon-plus" href="@Url.Action("Users", new { id = item.Id})" style="text-decoration:none;"></a>
+                                            </div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-responsive -->
+            </div> <!-- /.portlet-content -->
+        </div> <!-- /.portlet -->
+    </div> <!-- /.col -->
+</div> <!-- /.row -->
 
 <div class="modal fade modal-sm" id="editModal" tabindex="-1" role="dialog"
      aria-labelledby="modalLabel" aria-hidden="true" style="display: none; top: 30%; left: 35%;">
@@ -95,7 +116,6 @@
     <script>
         $(document).ready(function(){
             $('[data-toggle="popover"]').popover();
-            $('#projectsTable').dataTable();
             $('.edit-a').click(function () {
                 $('#id').attr('value', $(this).data('id'));
                 $('#title').text($(this).data('title'));

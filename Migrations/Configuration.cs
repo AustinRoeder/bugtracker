@@ -19,6 +19,7 @@ namespace bug_tracker.Migrations
 
         protected override void Seed(bug_tracker.Models.ApplicationDbContext context)
         {
+            #region RoleManager
             var roleManager = new RoleManager<IdentityRole>(
                  new RoleStore<IdentityRole>(context));
             var roles = new List<string>() {"Global Admin", "Admin", "Project Manager",
@@ -28,7 +29,9 @@ namespace bug_tracker.Migrations
                 if (!context.Roles.Any(r => r.Name == role))
                     roleManager.Create(new IdentityRole { Name = role });
             }
+            #endregion
 
+            #region UserManager
             var userManager = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(context));
 
@@ -105,6 +108,7 @@ namespace bug_tracker.Migrations
 
             var userID = userManager.FindByEmail("austinjroeder@gmail.com").Id;
             userManager.AddToRole(userID, "Global Admin");
+            #endregion
         }
     }
 }

@@ -3037,7 +3037,7 @@ input[type="button"].btn-block {
   overflow: hidden;
   background-color: #e5e5e5;
 }
-.dropdown-menu > li > a {
+.dropdown-menu > li > a, .dropdown-menu > li > form > a{
   display: block;
   padding: 3px 20px;
   clear: both;
@@ -3804,7 +3804,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-nav .open .dropdown-menu .dropdown-header {
     padding: 5px 15px 5px 25px;
   }
-  .navbar-nav .open .dropdown-menu > li > a {
+  .navbar-nav .open .dropdown-menu > li > a, .dropdown-menu > li > form > a{
     line-height: 20px;
   }
   .navbar-nav .open .dropdown-menu > li > a:hover,
@@ -3993,7 +3993,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: #e7e7e7;
 }
 @media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a, .dropdown-menu > li > form > a{
     color: #777;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
@@ -4082,7 +4082,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-inverse .navbar-nav .open .dropdown-menu .divider {
     background-color: #080808;
   }
-  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a, .dropdown-menu > li > form > a{
     color: #999;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,

@@ -55,6 +55,8 @@ namespace bug_tracker.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.User = UserManager.FindById(userId);
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.ChangeUsernameSuccess ? "Your username has been changed."
@@ -65,7 +67,6 @@ namespace bug_tracker.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
-            var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
