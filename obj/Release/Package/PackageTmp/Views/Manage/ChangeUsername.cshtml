@@ -1,6 +1,6 @@
 ﻿@model bug_tracker.Models.ChangeUsernameViewModel
 @{
-    ViewBag.Title = "Change Username";
+    ViewBag.Title = "Manage Change Display Name";
 }
 
 @using (Html.BeginForm("ChangeUsername", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -34,5 +34,5 @@
     </div>
 }
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("./bundles/jqueryval")
 }

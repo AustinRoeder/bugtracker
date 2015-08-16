@@ -1,44 +1,193 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug Tracker - @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @*<link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />*@
-    <link href="~/Content/style.css" rel="stylesheet" />
-    <link href="~/Content/teal.css" rel="stylesheet" />
-    <link href="~/Content/invalid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300,700" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/js/libs/css/ui-lightness/jquery-ui-1.9.2.custom.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="~/js/plugins/morris/morris.css" />
+    <link rel="stylesheet" href="~/js/plugins/icheck/skins/minimal/blue.css" />
+    <link rel="stylesheet" href="~/js/plugins/select2/select2.css" />
+    <link rel="stylesheet" href="~/js/plugins/fullcalendar/fullcalendar.css" />
+    <!-- App CSS -->
+    <link rel="stylesheet" href="~/css/target-admin.css" />
+    <link rel="stylesheet" href="~/css/custom.css" />
     <link href="~/Content/multi-select.css" rel="stylesheet" />
+    <link href="~/Content/Style.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-        @RenderBody()
+    @using Microsoft.AspNet.Identity;
+    @using bug_tracker.Helpers;
+    <div class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <i class="fa fa-cogs"></i>
+                </button>
+                <a class="navbar-brand navbar-brand-image" href="">
+                    <img src="~/img/logo.png" alt="Site Logo" />
+                </a>
+            </div> <!-- /.navbar-header -->
+            <div class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav noticebar navbar-left">
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell"></i>
+                            <span class="navbar-visible-collapsed">&nbsp;Notifications&nbsp;</span>
+                            <span class="badge">3</span>
+                        </a>
+                        <ul class="dropdown-menu noticebar-menu" role="menu">
+                            <li class="nav-header">
+                                <div class="pull-left">
+                                    Notifications
+                                </div>
+                                <div class="pull-right">
+                                    <a href="javascript:;">Mark as Read</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="" class="noticebar-item">
+                                    <span class="noticebar-item-image">
+                                        <i class="fa fa-cloud-upload text-success"></i>
+                                    </span>
+                                    <span class="noticebar-item-body">
+                                        <strong class="noticebar-item-title">Templates Synced</strong>
+                                        <span class="noticebar-item-text">20 Templates have been synced to the Mashon Demo instance.</span>
+                                        <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 12 minutes ago</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="noticebar-item">
+                                    <span class="noticebar-item-image">
+                                        <i class="fa fa-ban text-danger"></i>
+                                    </span>
+                                    <span class="noticebar-item-body">
+                                        <strong class="noticebar-item-title">Sync Error</strong>
+                                        <span class="noticebar-item-text">5 Designs have been failed to be synced to the Mashon Demo instance.</span>
+                                        <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 20 minutes ago</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="noticebar-menu-view-all">
+                                <a href="">View All Notifications</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown navbar-profile">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+                            <img src="~/img/users_icon.png" class="navbar-profile-avatar" alt="" />
+                            <span>@User.Identity.GetName() &nbsp;</span>
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index","Manage")">
+                                        <i class="fa fa-user"></i>
+                                        &nbsp;&nbsp;My Profile
+                                    </a>
+                                </li>
+                            <li>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                {
+                                    
+                                    <a href="javascript:document.getElementById('logoutForm').submit()" style="text-decoration: none">                                       
+                                        <i class="fa fa-sign-out"></i>
+                                        &nbsp;&nbsp;Log off
+                                    </a>
+                                }
+                            </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </div> <!--/.navbar-collapse -->
+        </div> <!-- /.container -->
+    </div> <!-- /.navbar -->
+    <div class="mainbar">
+        <div class="container">
+            <button type="button" class="btn mainbar-toggle" data-toggle="collapse" data-target=".mainbar-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="mainbar-collapse collapse">
+                <ul class="nav navbar-nav mainbar-nav">
+                    <li class=@(ViewBag.Title == "Home Index" ? "active" : "")>
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="fa fa-dashboard"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class=@(ViewBag.Title.Contains("Ticket") ? "active" : "")>
+                        <a href="@Url.Action("Index", "Ticket")">
+                            <i class="fa fa-ticket" ></i>
+                            Tickets
+                        </a>
+                    </li>
+                    <li class=@(ViewBag.Title.Contains("Project") ? "active" : "")>
+                        <a href="@Url.Action("Index", "Project")">
+                            <i class="fa fa-folder-open"></i>
+                            Projects
+                        </a>
+                    </li>
+                    <li class=@(ViewBag.Title.Contains("Admin") ? "active" : "")>
+                        <a href="@Url.Action("Index", "Admin")">
+                            <i class="fa fa-users"></i>
+                            Users
+                        </a>
+                    </li>
+                </ul>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container -->
+    </div> <!-- /.mainbar -->
+    <div class="container">
+        <div class="content">
+            <div class="content-container">
+                @RenderBody()
+        </div> <!-- /.content-container -->
+    </div> <!-- /.content -->
+</div> <!-- /.container -->
     @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-    <!--=========Preload script for css and images=========-->
-    <script src="~/Scripts/js/preloadCssImages.jQuery_v5.js"></script>
-    <!--=========Scripts=========-->
-    <script src="~/Scripts/js/script.js"></script>
-    <!--=========Date picker=========-->
-    <script src="~/Scripts/js/jCal.js"></script>
-    <script src="~/Scripts/js/jquery.animate.clip.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    <!-- Plugin JS -->
+    <script src="~/js/plugins/icheck/jquery.icheck.js"></script>
+    <script src="~/js/plugins/select2/select2.js"></script>
+    <script src="~/js/libs/raphael-2.1.2.min.js"></script>
+    <script src="~/js/plugins/morris/morris.min.js"></script>
+    <script src="~/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/js/plugins/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="~/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <!-- App JS -->
+    <script src="~/js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/js/plugins/datatables/DT_bootstrap.js"></script>
 
-    <!--=========Visualize for charting=========-->
-    <script src="~/Scripts/js/visualize.jQuery.js"></script>
-    <!--[if IE]><script language="javascript" type="text/javascript" src="~/Scripts/js/excanvas.min.js"></script><![endif]-->
-    <!--=========wysiwyg editor=========-->
-    <script src="~/Scripts/js/jquery.wysiwyg.js"></script>
+    <!-- Plugin JS -->
+    <script src="~/js/demos/dashboard.js"></script>
+    <script src="~/js/demos/calendar.js"></script>
+    <script src="~/js/demos/charts/morris/area.js"></script>
+    <script src="~/js/demos/charts/morris/donut.js"></script>
     <script src="~/Scripts/jquery.multi-select.js"></script>
-
-    <!--=========jExpand for Expanding Tables=========-->
-    <script src="~/Scripts/js/jExpand.js"></script>
-
-    <!--=========Data Tables=========-->
-    <script src="~/Scripts/js/jquery.dataTables.min.js"></script>
-    <script src="~/Scripts/js/TableTools.min.js"></script>
-    <script src="~/Scripts/js/ZeroClipboard.js"></script>
-    @*<script src="~/Scripts/bootstrap-multiselect.js"></script>*@
+    <script src="~/js/target-admin.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

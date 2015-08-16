@@ -18,13 +18,13 @@ namespace bug_tracker.Controllers
             var model = new List<TicketChartDetails>();
             if (user == null)
                 return RedirectToAction("Login", "Account");
+            ViewBag.NotInRole = db.Users.Where(u => u.Roles.Count == 0);
             if (User.IsInRole("Global Admin") || User.IsInRole("Admin"))
                 model = db.Projects.Select(p => new TicketChartDetails()
                 {
                     Title = p.Title,
                     TicketCount = p.Tickets.Count(),
                     PercentCompleted = (double)p.Tickets.Where(t => t.Status.Name == "Completed").Count() / (double)p.Tickets.Count() * 100,
-                    NotInRole = db.Users.Where(u => u.Roles.Count == 0),
                 }).ToList();
             else
                 model = user.Projects.Select(p => new TicketChartDetails()
@@ -32,10 +32,17 @@ namespace bug_tracker.Controllers
                     Title = p.Title,
                     TicketCount = p.Tickets.Count(),
                     PercentCompleted = (double)p.Tickets.Where(t => t.Status.Name == "Completed").Count() / (double)p.Tickets.Count() * 100,
-                    NotInRole = null,
                 }).ToList();
-
+                    
             return View(model);
+        }
+        public ActionResult AddSub(string id)
+        {
+            Helpers.UserRolesHelper helper = new Helpers.UserRolesHelper();
+            if(!String.IsNullOrWhiteSpace(id))
+                helper.AddUserToRole(id, "Submitter");
+
+            return RedirectToAction("Index", "Home");
         }
         public ActionResult GetChart()
         {

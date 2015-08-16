@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity;
 @model bug_tracker.Models.Ticket
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Ticket Details";
     var userId = User.Identity.GetUserId();
 }
 <section class="content-wrap">
@@ -13,10 +13,13 @@
    style="text-decoration:none;">Edit</a></small>
     <hr />
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4><b>Description</b></h4>
+                    <h4>
+                        <i class="fa fa-file-text-o"></i>
+                        Description
+                    </h4>
                 </div>
                 <div class="panel-body">
                     <div class="col-sm-12">
@@ -25,73 +28,74 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-4">
+            <div class="portlet">
+                <div class="portlet-header">
+                    <h3>
+                        <i class="fa fa-comments"></i>
+                        Comments
+                    </h3>
+                </div> <!-- /.portlet-header -->
+                <div class="portlet-content panel-thread scrollable-panel" tabindex="5000" style="overflow: hidden; outline: none;">
+                    @if (Model.OwnerId == userId || Model.AssignedToUserId == userId || Model.Project.Users.Any(u => u.Id == userId))
+                    {
+                        <form role="form" method="post" action="@Url.Action("CommentCreate")">
+                            @Html.AntiForgeryToken()
+                            <div class="input-group">
+                                <input type="hidden" name="TicketId" value="@Model.Id" />
+                                <input type="text" name="Body" placeholder="Write a comment here." class="form-control" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">
+                                        <span class="fa fa-comment-o"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    }
+                    <hr />
+                    <ul class="panel-lists">
+                        @foreach (var c in Model.Comments.OrderByDescending(d => d.Created))
+                        {
+                        <li>
+                            <img src="~/img/users_icon.png" alt="Avatar" class="panel-list-avatar">
+                            <div class="panel-list-content">
+                                <h5 href="#" class="panel-list-title">@c.Body</h5>
+                                <span class="panel-list-meta">posted by <i href="#">@c.Owner.DisplayName</i></span>
+                                <span class="panel-list-time">@c.Created.LocalDateTime</span>
+                            </div>
+                        </li>
+                        }
+                    </ul>
+                </div> <!-- /.portlet-content -->
+            </div>
+        </div>
     </div>
+
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Comments</a>
-                </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    <div class="col-xs-12" style="margin-bottom: 10px;">
-                        <div class="commentsContainer">
-                            @foreach (var c in Model.Comments.OrderBy(d => d.Created))
-                            {
-                            <!-- Comment -->
-                            <div class="media col-xs-11" style="margin-bottom:20px;">
-                                <a class="pull-left" href="#">
-                                    <img class="media-object" src="http://placehold.it/64x64" alt="">
-                                </a>
-                                <div class="media-body">
-                                    <h4 class="media-heading">
-                                        @c.Owner.FirstName
-                                        <small>@c.Created.DateTime</small>
-                                        <span class="pull-right">
-                                            @if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
-                                            {
-                                                <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
-                                                    data-target="#editModal" data-id="@c.Id" data-body="@c.Body" style="text-decoration:none;color:black;"></a>
-                                            }
-                                        </span>
-                                    </h4>
-                                    <h5>@c.Body</h5>
-                                </div>
-                            </div>
-                            }
-                        </div>
-                        <br />
-                    </div>
-                        @if (Model.OwnerId == userId || Model.AssignedToUserId == userId || Model.Project.Users.Any(u => u.Id == userId)) {
-                        <h4>Leave a Comment:</h4>
-                        <form role="form" method="post" action="@Url.Action("CommentCreate")">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="TicketId" value="@Model.Id" />
-                            <textarea name="Body" placeholder="Write your comment here."></textarea><br />
-                            <button type="submit" class="btn btn-primary grey-gradient" style="margin-bottom:10px;">Submit</button>
-                        </form>
-                        }
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
+                    <i class="fa fa-columns"></i>
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Histories</a>
                 </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse">
                 <div class="panel-body">
                     <div class="col-sm-11">
-                        <table class="table table-striped" id="histTable">
+                        <table class="table table-striped table-bordered table-hover table-highlight table-checkable"
+                               data-provide="datatable"
+                               data-display-rows="10"
+                               data-info="true"
+                               data-search="true"
+                               data-length-change="true"
+                               data-paginate="true">
                             <thead>
                                 <tr>
-                                    <th>Editor</th>
-                                    <th>Updated Property</th>
-                                    <th>Old Value</th>
-                                    <th>New Value</th>
-                                    <th>Updated Date</th>
+                                    <th data-filterable="true" data-sortable="true" data-direction="asc">Editor</th>
+                                    <th data-filterable="true" data-sortable="true">Updated Property</th>
+                                    <th data-filterable="true" data-sortable="true">Old Value</th>
+                                    <th data-filterable="true" data-sortable="true">New Value</th>
+                                    <th data-filterable="true" data-sortable="true">Updated Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -110,8 +114,8 @@
                                     foreach (var history in Model.Histories)
                                     {
                                         <tr>
-                                            <td>@history.User.Email</td>
-                                            <td>@history.Property</td>
+                                            <td>@history.User.DisplayName</td>
+                                            <td>@history.PropertyDisplay</td>
                                             <td>@history.OldValueDisplay</td>
                                             <td>@history.NewValueDisplay</td>
                                             <td>@history.Updated.LocalDateTime</td>
@@ -127,6 +131,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
+                    <i class="fa fa-paperclip"></i>
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Attachments</a>
                 </h4>
             </div>
@@ -134,31 +139,68 @@
                 <div class="panel-body">
                     <p>Add a file for observing purposes (i.e. Picture of the problem)</p>
                     @if (Model.OwnerId == userId || Model.AssignedToUserId == userId || Model.Project.Users.Any(u => u.Id == userId)) { 
-                        <div class="col-xs-10">
-                            <form method="post" action="@Url.Action("AttachmentCreate")" enctype="multipart/form-data">
-                                @Html.AntiForgeryToken()
+                        <form method="post" action="@Url.Action("AttachmentCreate")" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
+                            <div class="input-group">
                                 <input type="hidden" name="id" value="@Model.Id" />
-                                <input name="file" type="file" />
-                                <button type="submit" class="btn btn-primary grey-gradient" style="margin-bottom:10px;">Submit</button>
-                            </form>
-                        </div>
+                                <input name="file" type="file" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary" style="margin-bottom: 10px;">
+                                        <span class="fa fa-cloud-upload"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
                     }
-                    <div class="col-xs-10">
-                        @foreach (var a in Model.Attachments)
-                        {
-                            if (a.FileUrl != null)
+                    <br />
+                    <table class="table table-striped table-bordered table-hover table-highlight table-checkable" id="histTable"
+                           data-provide="datatable"
+                           data-display-rows="10"
+                           data-info="true"
+                           data-search="true"
+                           data-length-change="true"
+                           data-paginate="true">
+                        <thead>
+                            <tr>
+                                <th data-filterable="true" data-sortable="true" data-direction="asc">Added By</th>
+                                <th data-filterable="true" data-sortable="true">File Name</th>
+                                <th data-filterable="true" data-sortable="true">File Type</th>
+                                <th>View File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Attachments.Count < 1)
                             {
-                                <div class="centered">
-                                    <img class="img-responsive" src="@a.FileUrl" alt="">
-                                </div>
-                                <br>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                             }
-                        }
-                    </div>
+                            else
+                            {
+                                foreach (var a in Model.Attachments)
+                                {
+                                    <tr>
+                                        <td>@a.User.DisplayName</td>
+                                        <td>@a.FileName</td>
+                                        <td>@a.FileExt</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" style="margin-bottom:10px;" onclick="location.href='@a.FileUrl'">
+                                                <i class="fa fa-search-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
             aria-labelledby="modalLabel" aria-hidden="true" style="display: none">
         <div class="modal-dialog" style="width: 30%;">
@@ -184,10 +226,6 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#histTable').DataTable({
-                responsive: true,
-                "order":  [[4, "desc"]]
-            });
             $('.edit-a').click(function () {
                 $('#Edit-Id').attr('value', $(this).data('id'));
                 $('#body').text($(this).data('body'));

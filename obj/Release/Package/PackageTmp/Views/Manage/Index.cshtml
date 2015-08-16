@@ -1,6 +1,6 @@
 ﻿@model bug_tracker.Models.IndexViewModel
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "Manage Index";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -10,10 +10,11 @@
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>Username:</dt>
+        <dt>Display Name:</dt>
         <dd>
+            @ViewBag.User.DisplayName
             [
-            @Html.ActionLink("Change your username", "ChangeUsername")
+            @Html.ActionLink("Change your display name", "ChangeUsername")
             ]
         </dd>
         <dt>Password:</dt>

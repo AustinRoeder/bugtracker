@@ -330,6 +330,7 @@ namespace bug_tracker.Controllers
             var attachment = new TAttachment();
             var exts = new List<string>() { ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".docx", ".txt", ".rtf", ".mac", ".pdf" };
             var ext = Path.GetExtension(file.FileName).ToLower();
+            var name = file.FileName.Split(ext.ToArray()).First();
             if (!exts.Any(item => item == ext))
                 ModelState.AddModelError("image", "Invalid Format");
             if (ModelState.IsValid)
@@ -341,6 +342,8 @@ namespace bug_tracker.Controllers
                     Directory.CreateDirectory(absPath);
                     attachment.FilePath = filePath;
                     attachment.TicketId = ticket.Id;
+                    attachment.FileExt = ext;
+                    attachment.FileName = name;
                     attachment.UserId = User.Identity.GetUserId();
                     attachment.FileUrl = filePath + file.FileName;
                     attachment.Created = DateTimeOffset.Now.LocalDateTime;

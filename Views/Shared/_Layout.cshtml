@@ -146,8 +146,14 @@
                     </li>
                     <li class=@(ViewBag.Title.Contains("Project") ? "active" : "")>
                         <a href="@Url.Action("Index", "Project")">
-                            <i class="fa fa-folder-open" ></i>
+                            <i class="fa fa-folder-open"></i>
                             Projects
+                        </a>
+                    </li>
+                    <li class=@(ViewBag.Title.Contains("Admin") ? "active" : "")>
+                        <a href="@Url.Action("Index", "Admin")">
+                            <i class="fa fa-users"></i>
+                            Users
                         </a>
                     </li>
                 </ul>
