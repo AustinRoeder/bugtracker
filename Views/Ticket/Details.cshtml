@@ -14,16 +14,16 @@
     <hr />
     <div class="row">
         <div class="col-sm-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+            <div class="portlet">
+                <div class="portlet-header">
                     <h4>
                         <i class="fa fa-file-text-o"></i>
                         Description
                     </h4>
                 </div>
-                <div class="panel-body">
+                <div class="portlet-content panel-thread scrollable-panel" tabindex="5000" style="overflow: hidden; outline: none; height: 365px;">
                     <div class="col-sm-12">
-                        <p>@Model.Desc</p>                                
+                        <p>@Model.Desc</p>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,23 @@
                         Comments
                     </h3>
                 </div> <!-- /.portlet-header -->
-                <div class="portlet-content panel-thread scrollable-panel" tabindex="5000" style="overflow: hidden; outline: none;">
+                <div class="portlet-content panel-thread scrollable-panel" tabindex="5000" style="overflow: hidden; outline: none; padding-bottom:0px;">
+                    <ul class="panel-lists" style="margin-bottom: 0px;">
+                        @foreach (var c in Model.Comments.OrderByDescending(d => d.Created))
+                        {
+                        <li>
+                            <img src="~/img/users_icon.png" alt="Avatar" class="panel-list-avatar">
+                            <div class="panel-list-content">
+                                <h5 href="#" class="panel-list-title">@c.Body</h5>
+                                <span class="panel-list-meta">posted by <i href="#">@c.Owner.DisplayName</i></span>
+                                <span class="panel-list-time">@c.Created.LocalDateTime</span>
+                                <a data-toggle="modal" href="#editModal" class="btn btn-primary"></a>
+                            </div>
+                        </li>
+                        }
+                    </ul>
+                </div> <!-- /.portlet-content -->
+                <div class="portlet-footer" style="border-top: 1px solid #D5D5D5; background-color: #f3f3f3">
                     @if (Model.OwnerId == userId || Model.AssignedToUserId == userId || Model.Project.Users.Any(u => u.Id == userId))
                     {
                         <form role="form" method="post" action="@Url.Action("CommentCreate")">
@@ -52,25 +68,72 @@
                             </div>
                         </form>
                     }
-                    <hr />
-                    <ul class="panel-lists">
-                        @foreach (var c in Model.Comments.OrderByDescending(d => d.Created))
-                        {
-                        <li>
-                            <img src="~/img/users_icon.png" alt="Avatar" class="panel-list-avatar">
-                            <div class="panel-list-content">
-                                <h5 href="#" class="panel-list-title">@c.Body</h5>
-                                <span class="panel-list-meta">posted by <i href="#">@c.Owner.DisplayName</i></span>
-                                <span class="panel-list-time">@c.Created.LocalDateTime</span>
-                            </div>
-                        </li>
-                        }
-                    </ul>
-                </div> <!-- /.portlet-content -->
+                </div>
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-header">
+                    <h4>
+                        <i class="fa fa-user"></i>
+                        Assigned User
+                    </h4>
+                </div>
+                <div class="portlet-content" style="text-align: center">
+                    <h4>
+                        @(Model.AssignedToUser != null ? Model.AssignedToUser.DisplayName : "None Assigned")
+                    </h4>
+                </div>
+            </div>
+        </div> <!-- User Portlet -->
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-header">
+                    <h4>
+                        <i class="fa fa-folder"></i>
+                        Project
+                    </h4>
+                </div>
+                <div class="portlet-content" style="text-align: center">
+                    <h4>
+                        @Model.Project.Title
+                    </h4>
+                </div>
+            </div>
+        </div> <!-- Project Portlet -->
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-header">
+                    <h4>
+                        <i class="fa fa-bar-chart-o"></i>
+                        Status
+                    </h4>
+                </div>
+                <div class="portlet-content" style="text-align: center">
+                    <h4>
+                        @Model.Status.Name
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-header">
+                    <h4>
+                        <i class="fa fa-tag"></i>
+                        Type
+                    </h4>
+                </div>
+                <div class="portlet-content" style="text-align: center">
+                    <h4>
+                        @Model.Type.Name
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -81,7 +144,7 @@
             </div>
             <div id="collapseOne" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <div class="col-sm-11">
+                    <div class="col-sm-12">
                         <table class="table table-striped table-bordered table-hover table-highlight table-checkable"
                                data-provide="datatable"
                                data-display-rows="10"
@@ -91,11 +154,11 @@
                                data-paginate="true">
                             <thead>
                                 <tr>
-                                    <th data-filterable="true" data-sortable="true" data-direction="asc">Editor</th>
-                                    <th data-filterable="true" data-sortable="true">Updated Property</th>
-                                    <th data-filterable="true" data-sortable="true">Old Value</th>
-                                    <th data-filterable="true" data-sortable="true">New Value</th>
-                                    <th data-filterable="true" data-sortable="true">Updated Date</th>
+                                    <th>Editor</th>
+                                    <th>Updated Property</th>
+                                    <th>Old Value</th>
+                                    <th>New Value</th>
+                                    <th data-sortable="true" data-direction="desc">Updated Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -118,7 +181,10 @@
                                             <td>@history.PropertyDisplay</td>
                                             <td>@history.OldValueDisplay</td>
                                             <td>@history.NewValueDisplay</td>
-                                            <td>@history.Updated.LocalDateTime</td>
+                                            <td>
+                                                @history.Updated.DateTime.ToShortDateString()
+                                                @history.Updated.DateTime.ToShortTimeString()
+                                            </td>
                                         </tr>
                                     }
                                 }
@@ -144,7 +210,7 @@
                             <div class="input-group">
                                 <input type="hidden" name="id" value="@Model.Id" />
                                 <input name="file" type="file" class="form-control" />
-                                <span class="input-group-btn">
+                                <span>
                                     <button type="submit" class="btn btn-primary" style="margin-bottom: 10px;">
                                         <span class="fa fa-cloud-upload"></span>
                                     </button>

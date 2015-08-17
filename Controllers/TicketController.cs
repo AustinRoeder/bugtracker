@@ -61,13 +61,16 @@ namespace bug_tracker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Desc,OwnerId,ProjectId,StatusId,TypeId,PriorityId,Title,AssignedToUserId")] Ticket ticket)
         {
-
-            ticket.OwnerId = User.Identity.GetUserId();
-            ticket.StatusId = 1;
-            ticket.Created = DateTimeOffset.Now.LocalDateTime;
-            db.Tickets.Add(ticket);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                ticket.OwnerId = User.Identity.GetUserId();
+                ticket.StatusId = 1;
+                ticket.Created = DateTimeOffset.Now.LocalDateTime;
+                db.Tickets.Add(ticket);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(ticket);
         }
         public ActionResult Edit(int? id)
         {
@@ -133,7 +136,7 @@ namespace bug_tracker.Controllers
             
             if (oldTicket.AssignedToUserId != newTicket.AssignedToUserId)
             {
-                var oldUser = oldTicket.AssignedToUserId != null ? db.Users.Find(oldTicket.AssignedToUserId).UserName : "Unassigned";
+                var oldUser = oldTicket.AssignedToUserId != null ? oldTicket.AssignedToUser.UserName : "Unassigned";
                 histories.Add(new THistoryWithNotification()
                 {
                     History = new THistory()
@@ -144,7 +147,7 @@ namespace bug_tracker.Controllers
                         PropertyDisplay = "Assigned User",
                         OldValue = oldTicket.AssignedToUserId,
                         OldValueDisplay = oldUser,
-                        NewValue = newTicket.AssignedToUserId,
+                        NewValue = newUser.Id,
                         NewValueDisplay = newUser.UserName
                     },
                     Notification = newUser != null ? new IdentityMessage()
@@ -181,9 +184,9 @@ namespace bug_tracker.Controllers
                        Property = "Title",
                        PropertyDisplay = "Title",
                        OldValue = oldTicket.Title,
-                       OldValueDisplay = oldTicket.Desc,
+                       OldValueDisplay = oldTicket.Title,
                        NewValue = newTicket.Title,
-                       NewValueDisplay = newTicket.Desc
+                       NewValueDisplay = newTicket.Title
                    },
                    Notification = null
                });
@@ -337,7 +340,7 @@ namespace bug_tracker.Controllers
             {
                 if (file != null)
                 {
-                    var filePath = "/Uploads/";
+                    var filePath = "/Upload/";
                     var absPath = Server.MapPath("~" + filePath);
                     Directory.CreateDirectory(absPath);
                     attachment.FilePath = filePath;

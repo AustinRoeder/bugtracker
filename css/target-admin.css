@@ -3177,7 +3177,7 @@ ul.support-list li {
   margin-left: 2.5em;
 }
 .scrollable-panel {
-  height: 392px;
+  height: 300px;
   overflow-y: hidden;
   outline: none;
 }

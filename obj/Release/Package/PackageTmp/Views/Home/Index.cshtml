@@ -30,9 +30,10 @@
                         <h3>
                             <i class="fa fa-folder-open-o"></i>
                             Project Overview
+                            <small>Projects</small>
                         </h3>
                     </div> <!-- /.portlet-header -->
-                    <div class="portlet-content panel-thread scrollable-panel" tabindex="5000" style="overflow: hidden; outline: none;">
+                    <div class="portlet-content panel-thread scrollable-panel" tabindex="5000" style="overflow: hidden; outline: none; height: 392px;">
                         <ul class="panel-lists" id="projectOverview">
                             @foreach (var obj in Model.OrderBy(t=>t.PercentCompleted))
                             {                    
@@ -87,9 +88,10 @@
                                     <td class="hidden-xs">@d.DisplayName</td>
                                     <td>@d.Email</td>
                                     <td class="text-center">
-                                    @using (Html.BeginForm("AddSub", "Home", new { id = d.Id}, FormMethod.Post, new { id = "approveForm" }))
+                                    @using (Html.BeginForm("AddSub", "Home", FormMethod.Post, new { id = d.Id }))
                                     {
-                                        <a href="javascript:document.getElementById('approveForm').submit()" class="btn btn-xs btn-primary" data-original-title="Approve">
+                                        <input type="hidden" name="id" value="@d.Id"/>
+                                        <a href="javascript:document.getElementById('@d.Id').submit()" class="btn btn-xs btn-primary" data-original-title="Approve">
                                             <i class="fa fa-check"></i>
                                         </a>
                                     }
@@ -130,13 +132,15 @@
                     </div> <!-- /.portlet-header -->
                     <div class="portlet-content panel-thread scrollable-panel" tabindex="5000" style="overflow: hidden; outline: none;">
                         <ul class="panel-lists" id="projectOverview">
-                            @foreach (var obj in Model)
+                            @foreach (var obj in Model.OrderBy(t => t.PercentCompleted))
                             {
                                 <li>
                                     <div class="progress-stat">
 
                                         <div class="progress-stat-label">
                                             @obj.Title
+                                            <br />
+                                            <small>Completed tickets: @(obj.PercentCompleted / 100 * obj.TicketCount) of @(obj.TicketCount)</small>
                                         </div> <!-- /.stat-label -->
 
                                         <div class="progress-stat-value">
@@ -144,13 +148,14 @@
                                         </div> <!-- /.stat-value -->
 
                                         <div class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-@colors[j%3]" role="progressbar" aria-valuenow="@obj.PercentCompleted" aria-valuemin="0" aria-valuemax="100" style="width: @(obj.PercentCompleted)%">
+                                            <div class="progress-bar progress-bar-@colors[i%3]" role="progressbar"
+                                                 aria-valuenow="@obj.PercentCompleted" aria-valuemin="0" aria-valuemax="100" style="width: @(obj.PercentCompleted)%">
                                                 <span class="sr-only">@obj.PercentCompleted% Complete</span>
                                             </div>
                                         </div> <!-- /.progress -->
                                     </div>
                                 </li>
-                                j++;
+                                i++;
                             }
                         </ul> <!-- /.projectList -->
                     </div> <!-- /.portlet-content -->

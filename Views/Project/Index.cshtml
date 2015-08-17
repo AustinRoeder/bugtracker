@@ -18,10 +18,14 @@
                                     "<input type=\"text\" name=\"Title\" placeholder=\"Title of new project*\" />" +
                                     "<button type=\"submit\">Create</button>" +
                                 "</form>";
-                        <a id="projCreate" href="#" data-toggle="popover" data-trigger="click" class="pull-right" data-placement="left"
-                            style="cursor:pointer;text-decoration:none;color:blue;" title="Project Creation" data-content="@form" data-html="true">
-                            New
-                        </a>
+                    <ul class="portlet-tools pull-right">
+                        <li>
+                            <a id="projCreate" href="#" data-toggle="popover" data-trigger="click" class="pull-right" data-placement="left"
+                                style="cursor:pointer;text-decoration:none;color:blue;" title="Project Creation" data-content="@form" data-html="true">
+                                New
+                            </a>
+                        </li>
+                    </ul>
                 }
             </div> <!-- /.portlet-header -->
             <div class="portlet-content">
@@ -49,8 +53,8 @@
                                     <td>    
                                     @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
                                     {
-                                            <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
-                                               data-target="#editModal" data-id="@item.Id" data-title="@item.Title" style="text-decoration:none;"></a>
+                                            <a class="glyphicon glyphicon-pencil edit-a" href="#" data-target="#editModal" data-toggle="modal"
+                                               data-id="@item.Id" data-title="@item.Title" style="text-decoration:none;"></a>
                                     }
                                     </td>
                                     <td>
@@ -89,37 +93,56 @@
         </div> <!-- /.portlet -->
     </div> <!-- /.col -->
 </div> <!-- /.row -->
-
-<div class="modal fade modal-sm" id="editModal" tabindex="-1" role="dialog"
-     aria-labelledby="modalLabel" aria-hidden="true" style="display: none; top: 30%; left: 35%;">
-    <div class="modal-dialog modal-sm">
+@*<div id="editModal" class="modal modal-sm modal-styled fade" tabindex="-1"
+     aria-hidden="true" style="display: none; top: 30%; left: 35%;">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" style="text-align:center">
-                <h2 class="modal-title" id="modalLabel">Edit Project</h2>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title">Edit Project</h3>
+            </div>
+            <form method="post" action="@Url.Action("Edit")">
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="id" name="Id" value="" />
+                    <input type="text" class="text-center" id="title" name="Title" placeholder="Enter a new title" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-tertiary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>*@
+
+<div id="editModal" class="modal modal-styled fade" role="dialog" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title">Styled Modal</h3>
             </div>
             <div class="modal-body">
-                <div class="row" style="text-align:center">
-                    <form method="post" action="@Url.Action("Edit")">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" id="id" name="Id" value="" />
-                        <input type="text" class="text-center" id="title" name="Title" placeholder="Enter a new title"/>
-                        <hr />
-                        <button type="submit">Save Changes</button><br/>
-                        <small>*Or click below the window to close*</small>
-                    </form>
-                </div>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
+
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.…</p>
             </div>
-        </div>
-    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-tertiary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>
 @section scripts{
     <script>
         $(document).ready(function(){
             $('[data-toggle="popover"]').popover();
-            $('.edit-a').click(function () {
-                $('#id').attr('value', $(this).data('id'));
-                $('#title').text($(this).data('title'));
-            });
+            //$('.edit-a').click(function () {
+            //    $('#id').attr('value', $(this).data('id'));
+            //    $('#title').text($(this).data('title'));
+            //});
         })
     </script>
 }

@@ -20,20 +20,25 @@ namespace bug_tracker.Controllers
                 return RedirectToAction("Login", "Account");
             ViewBag.NotInRole = db.Users.Where(u => u.Roles.Count == 0);
             if (User.IsInRole("Global Admin") || User.IsInRole("Admin"))
+            {
+                ViewBag.ProjectCount = db.Projects.Count();
                 model = db.Projects.Select(p => new TicketChartDetails()
                 {
                     Title = p.Title,
                     TicketCount = p.Tickets.Count(),
-                    PercentCompleted = (double)p.Tickets.Where(t => t.Status.Name == "Completed").Count() / (double)p.Tickets.Count() * 100,
+                    PercentCompleted = p.Tickets.Count() != 0 ? (double)p.Tickets.Where(t => t.Status.Name == "Completed").Count() / (double)p.Tickets.Count() * 100 : 100,
                 }).ToList();
+            }
             else
+            {
+                ViewBag.ProjectCount = user.Projects.Count();
                 model = user.Projects.Select(p => new TicketChartDetails()
                 {
                     Title = p.Title,
                     TicketCount = p.Tickets.Count(),
                     PercentCompleted = (double)p.Tickets.Where(t => t.Status.Name == "Completed").Count() / (double)p.Tickets.Count() * 100,
                 }).ToList();
-                    
+            }
             return View(model);
         }
         public ActionResult AddSub(string id)
@@ -46,9 +51,18 @@ namespace bug_tracker.Controllers
         }
         public ActionResult GetChart()
         {
-            var tTotal = db.Tickets.Count();
+            var tix = db.Tickets.AsQueryable();
+            var user = db.Users.Find(User.Identity.GetUserId());
+            if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
+                tix = db.Tickets;
+            else if (User.IsInRole("Project Manager"))
+                tix = tix.Where(t => t.Project.Users.Contains(user));
+            else if (User.IsInRole("Developer"))
+                tix = tix.Where(t => t.AssignedToUserId == user.Id);
+            else
+                tix = tix.Where(t => t.OwnerId == user.Id);
             var donut = (from s in db.TStatuses
-                         let aCount = (from t in db.Tickets
+                         let aCount = (from t in tix
                                        where s.Id == t.StatusId
                                        select t).Count()
                          select new
@@ -56,17 +70,9 @@ namespace bug_tracker.Controllers
                              label = s.Name,
                              value = aCount
                          }).ToArray();
-            var progress = (from p in db.Projects
-                                let tCount = p.Tickets.Count
-                                select new { 
-                                    label = p.Title,
-                                    value = tCount,
-                                    percent = (tCount / (double)tTotal) * 100
-                                }).ToArray();
             var result = new
             {
                 donut = donut,
-                progress = progress,
             };
 
             return Content(JsonConvert.SerializeObject(result), "application/json");
