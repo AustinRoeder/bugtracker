@@ -39,7 +39,6 @@
                            data-paginate="true">
                         <thead>
                             <tr>
-                                <th width="1px;">Edit</th>
                                 <th data-filterable="true" data-sortable="true" data-direction="asc">Title</th>
                                 <th data-filterable="true" data-sortable="true">Tickets</th>
                                 <th data-filterable="true" data-sortable="true">Users</th>
@@ -50,22 +49,15 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>    
-                                    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
-                                    {
-                                            <a class="glyphicon glyphicon-pencil edit-a" href="#" data-toggle="modal"
-                                               data-target="#editModal" data-id="@item.Id" data-title="@item.Title" style="text-decoration:none;"></a>
-                                    }
-                                    </td>
                                     <td>
                                         <div class="row">
                                             <div class="col-xs-6">
-                                                @Html.DisplayFor(modelItem => item.Title)
+                                                <a href="@Url.Action("Details", "Project", new { id = item.Id})">@item.Title</a>
                                             </div>
                                         </div>
                                     </td>
                                     <td style="text-align:center">
-                                        @Html.DisplayFor(modelItem => item.Tickets.Count)
+                                                @Html.DisplayFor(modelItem => item.Tickets.Count)
                                     </td>
                                     <td>
                                         <div class="col-xs-9">
@@ -93,37 +85,36 @@
         </div> <!-- /.portlet -->
     </div> <!-- /.col -->
 </div> <!-- /.row -->
-
-<div class="modal fade modal-sm" id="editModal" tabindex="-1" role="dialog"
-     aria-labelledby="modalLabel" aria-hidden="true" style="display: none; top: 30%; left: 35%;">
-    <div class="modal-dialog modal-sm">
+@*<div id="editModal" class="modal modal-sm modal-styled fade" tabindex="-1"
+     aria-hidden="true" style="display: none; top: 30%; left: 35%;">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" style="text-align:center">
-                <h2 class="modal-title" id="modalLabel">Edit Project</h2>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title">Edit Project</h3>
             </div>
-            <div class="modal-body">
-                <div class="row" style="text-align:center">
-                    <form method="post" action="@Url.Action("Edit")">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" id="id" name="Id" value="" />
-                        <input type="text" class="text-center" id="title" name="Title" placeholder="Enter a new title"/>
-                        <hr />
-                        <button type="submit">Save Changes</button><br/>
-                        <small>*Or click below the window to close*</small>
-                    </form>
+            <form method="post" action="@Url.Action("Edit")">
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="id" name="Id" value="" />
+                    <input type="text" class="text-center" id="title" name="Title" placeholder="Enter a new title" />
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-tertiary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>*@
 @section scripts{
     <script>
         $(document).ready(function(){
             $('[data-toggle="popover"]').popover();
-            $('.edit-a').click(function () {
-                $('#id').attr('value', $(this).data('id'));
-                $('#title').text($(this).data('title'));
-            });
+            //$('.edit-a').click(function () {
+            //    $('#id').attr('value', $(this).data('id'));
+            //    $('#title').text($(this).data('title'));
+            //});
         })
     </script>
 }

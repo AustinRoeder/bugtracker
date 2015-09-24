@@ -19,6 +19,7 @@ namespace bug_tracker.Models
         public int StatusId { get; set; }
         public int ProjectId { get; set; }
         public int PriorityId { get; set; }
+        public bool FromProject { get; set; }
         public System.DateTimeOffset Created { get; set; }
         public Nullable<System.DateTimeOffset> Updated { get; set; }
         public string Title { get; set; }

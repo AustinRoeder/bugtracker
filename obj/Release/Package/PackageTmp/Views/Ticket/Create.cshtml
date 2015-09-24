@@ -4,6 +4,7 @@
     ViewBag.Title = "Ticket Create";
     var projArr = ViewBag.Projects;
     List<SelectListItem> projects = new List<SelectListItem>();
+    
     var devArr = ViewBag.Devs;
     List<SelectListItem> devs = new List<SelectListItem>();
 }
@@ -47,7 +48,7 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.StatusId, "Status")
-                <select id="statusSelect" name="statusSelect" class="form-control parsley-validated" data-required="true">
+                <select id="statusSelect" name="StatusId" class="form-control parsley-validated" data-required="true">
                     <option value="">Status Select</option>
                     <option class="divider"></option>
                     <option value="1">Not Started</option>
@@ -57,12 +58,19 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.ProjectId, "Project")
-                <select id="projectSelect" name="projectSelect" class="form-control parsley-validated" data-required="true">
+                <select id="projectSelect" name="ProjectId" class="form-control parsley-validated" data-required="true">
                     <option value="">Project Select</option>
                     <option class="divider"></option>
                     @for (var i = 0; i < projArr.Count; i++)
                     {
-                        <option value="@projArr[i].Id.ToString()">@projArr[i].Title</option>
+                        if (projArr[i].Id == ViewBag.Project.Id)
+                        {
+                            <option selected="selected" value="@projArr[i].Id">@projArr[i].Title</option>
+                        }
+                        else
+                        {
+                            <option value="@projArr[i].Id">@projArr[i].Title</option>
+                        }
                     }
                 </select>
             </div>
@@ -70,7 +78,7 @@
             {
                 <div class="form-group">
                     @Html.LabelFor(model => model.AssignedToUserId, "Assign User")
-                    <select id="assignedSelect" name="assignedSelect" class="form-control parsley-validated" data-required="true">
+                    <select id="assignedSelect" name="AssignedToUserId" class="form-control parsley-validated" data-required="true">
                         <option value="">Developer Select</option>
                         <option class="divider"></option>
                         @for (var i = 0; i < devArr.Count; i++)

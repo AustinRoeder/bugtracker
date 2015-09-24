@@ -50,9 +50,13 @@ namespace bug_tracker.Controllers
                 return View(db.Tickets.Where(t=>t.OwnerId == user.Id).ToList());
             }
         }
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             ViewBag.Projects = db.Projects.ToList();
+            if (id != null)
+            {
+                ViewBag.Project = db.Projects.Find(id);
+            }
             ViewBag.Devs = helper.UsersInRole("Developer").ToList();
 
             return View();
@@ -68,16 +72,18 @@ namespace bug_tracker.Controllers
                 ticket.Created = DateTimeOffset.Now.LocalDateTime;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Project", new { id  = ticket.ProjectId});
             }
             return View(ticket);
         }
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, bool? fromProject)
         {
             ViewBag.Devs = helper.UsersInRole("Developer").ToList();
             var user = db.Users.Find(User.Identity.GetUserId());
-            ViewBag.Projects = db.Projects.ToList();
+            var projects = db.Projects.ToList();
+            ViewBag.Projects = projects;
             var model = db.Tickets.Find(id);
+            model.FromProject = (bool)(fromProject != null ? fromProject : false);
             if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
             {
                 return View(model);
@@ -97,7 +103,7 @@ namespace bug_tracker.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Desc,Created,Updated,ProjectId,AssignedToUserId,TypeId,PriorityId,StatusId")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "Id,Title,Desc,Updated,ProjectId,AssignedToUserId,TypeId,PriorityId,StatusId,FromProject")] Ticket ticket)
         {
             var editable = new List<string>() { "Title", "Desc" };
             if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
@@ -123,7 +129,8 @@ namespace bug_tracker.Controllers
 
                 db.Update(ticket, editable.ToArray());
                 db.SaveChanges();
-
+                if (ticket.FromProject)
+                    return RedirectToAction("Details", "Project", new { id  = ticket.ProjectId});
                 return RedirectToAction("Index");
             }
             return View(ticket);

@@ -16,7 +16,7 @@
                     <div class="portlet-header">
                         <h3>
                             <i class="fa fa-bar-chart-o"></i>
-                            Ticket Progress
+                            Your Overall Ticket Progress
                         </h3>
                     </div> <!-- /.portlet-header -->
                     <div class="portlet-content">
@@ -30,7 +30,8 @@
                         <h3>
                             <i class="fa fa-folder-open-o"></i>
                             Project Overview
-                            <small>Projects</small>
+                            &nbsp;
+                            <small>@ViewBag.ProjectCount Projects</small>
                         </h3>
                     </div> <!-- /.portlet-header -->
                     <div class="portlet-content panel-thread scrollable-panel" tabindex="5000" style="overflow: hidden; outline: none; height: 392px;">
@@ -178,29 +179,9 @@
                     //value: 'Value',
                     resize: true
                 });
-            $('.scrollable-panel').niceScroll()
-                //console.log(response.progress);
-                //var colors = ["primary", "green", "blue"];
-                //for(var i = 0; i < response.progress.length; i++)
-                //{
-                //    var progI = response.progress[i];
-                //    console.log(progI);
-                //    $('#projectOverview').append(
-                //            "<li>"+
-                //                "<div class='progress-stat'>"+
-                //                    "<div class='progress-stat-label'>"+
-                //                        progI.label+
-                //                    "</div> <!-- /.stat-label -->"+
-                //                    "<div class='progress progress-striped active'>"+
-                //                        "<div class='progress-bar progress-bar-" + colors[(i%3)] + "' role='progressbar'"+
-                //                                "aria-valuenow='" + progI.value + "' aria-valuemin='0' aria-valuemax='100' style='width: " + progI.percent + "%'>" +
-                //                                progI.value + " tickets" +
-                //                        "<span class='sr-only'>" + progI.percent + "% of all Tickets</span>"+
-                //                        "</div>"+
-                //                    "</div> <!-- /.progress -->"+
-                //                "</div> <!-- /.progress-stat -->"+
-                //            "</li> <!-- /.progessListItem -->");
-                //}
+                $('.scrollable-panel').niceScroll({
+                    autohidemode: false,
+                })
             })
         })
     </script>
