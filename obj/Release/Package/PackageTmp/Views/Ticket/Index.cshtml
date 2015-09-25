@@ -30,8 +30,8 @@
                         <thead>
                             <tr>
                                 <th>Edit</th>
-                                <th data-filterable="true" data-sortable="true" data-direction="asc">Title</th>
-                                <th data-filterable="true" data-sortable="true">Owner</th>
+                                <th data-filterable="true" data-sortable="true">Title</th>
+                                <th data-filterable="true" data-sortable="true" data-direction="desc">Created On</th>
                                 <th data-filterable="true" data-sortable="true">Status</th>
                                 <th data-filterable="true" data-sortable="true">Priority</th>
                                 <th data-filterable="true" data-sortable="true">Project</th>
@@ -55,7 +55,7 @@
                                             @item.Title
                                         </a>
                                     </td>
-                                    <td>@item.Owner.DisplayName</td>
+                                    <td>@item.Created.DateTime</td>
                                     <td>@item.Status.Name</td>
                                     <td>@item.Priority.Name</td>
                                     <td>@item.Project.Title</td>

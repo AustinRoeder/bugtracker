@@ -203,8 +203,8 @@
             </div>
             <div id="collapseThree" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>Add a file for observing purposes (i.e. Picture of the problem)</p>
-                    @if (Model.OwnerId == userId || Model.AssignedToUserId == userId || Model.Project.Users.Any(u => u.Id == userId)) { 
+                    @if (Model.OwnerId == userId || Model.AssignedToUserId == userId || Model.Project.Users.Any(u => u.Id == userId) || User.IsInRole("Admin") || User.IsInRole("Global Admin")) { 
+                        <p>Add a file for observing purposes (i.e. Picture of the problem)</p>
                         <form method="post" action="@Url.Action("AttachmentCreate")" enctype="multipart/form-data">
                             @Html.AntiForgeryToken()
                             <div class="input-group">

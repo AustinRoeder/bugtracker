@@ -48,13 +48,13 @@
                                         </div> <!-- /.stat-label -->
 
                                         <div class="progress-stat-value">
-                                            @obj.PercentCompleted%
+                                            @obj.PercentCompleted.ToString("#.##")%
                                         </div> <!-- /.stat-value -->
 
                                         <div class="progress progress-striped active">
                                             <div class="progress-bar progress-bar-@colors[i%3]" role="progressbar"
                                                  aria-valuenow="@obj.PercentCompleted" aria-valuemin="0" aria-valuemax="100" style="width: @(obj.PercentCompleted)%">
-                                                <span class="sr-only">@obj.PercentCompleted% Complete</span>
+                                                <span class="sr-only">@obj.PercentCompleted.ToString("#.##")% Complete</span>
                                             </div>
                                         </div> <!-- /.progress -->
                                     </div>

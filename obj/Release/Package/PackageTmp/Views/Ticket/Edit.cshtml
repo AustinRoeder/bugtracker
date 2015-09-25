@@ -4,8 +4,27 @@
     ViewBag.Title = "Ticket Edit";
     var projArr = (List<Project>)ViewBag.Projects;
     List<SelectListItem> projects = new List<SelectListItem>();
-    foreach (var item in projArr) { 
-        projects.Add(new SelectListItem() { Text = item.Title, Value = item.Id.ToString()});
+    foreach (var item in projArr)
+    {
+        projects.Add(new SelectListItem() { Text = item.Title, Value = item.Id.ToString() });
+    }
+    var typeArr = (List<TType>)ViewBag.Types;
+    List<SelectListItem> types = new List<SelectListItem>();
+    foreach (var item in typeArr)
+    {
+        types.Add(new SelectListItem() { Text = item.Name, Value = item.Id.ToString() });
+    }
+    var priorArr = (List<TPriority>)ViewBag.Priorities;
+    List<SelectListItem> priorities = new List<SelectListItem>();
+    foreach (var item in priorArr)
+    {
+        priorities.Add(new SelectListItem() { Text = item.Name, Value = item.Id.ToString() });
+    }
+    var statArr = (List<TStatus>)ViewBag.Statuses;
+    List<SelectListItem> statuses = new List<SelectListItem>();
+    foreach (var item in statArr)
+    {
+        statuses.Add(new SelectListItem() { Text = item.Name, Value = item.Id.ToString() });
     }
     var devArr = (List<ApplicationUser>)ViewBag.Devs;
     List<SelectListItem> devs = new List<SelectListItem>();
@@ -24,72 +43,64 @@
     <div class="portlet-content">
         <form method="post" action="@Url.Action("Edit")" style="margin-left: 30px;">
             @Html.AntiForgeryToken()
-            <div class="form-group">
-                @Html.LabelFor(model => model.Title)
-                <input value="@Model.Title" type="text" id="title" name="Title" class="form-control parsley-validated" data-required="true">
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Desc, "Description")
-                <textarea data-required="true" data-minlength="5" name="Desc" id="desc" cols="10" rows="2" class="form-control parsley-validated">@Model.Desc</textarea>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.PriorityId, "Priority")
-                <select id="PriorityId" name="PriorityId" class="form-control parsley-validated" data-required="true">
-                    <option value="">Priority Select</option>
-                    <option class="divider" disabled="disabled"></option>
-                    <option selected="@( Model.PriorityId == 1 ? "selected":"")" value="1">Low</option>
-                    <option selected="@( Model.PriorityId == 2 ? "selected":"")" value="2">Medium</option>
-                    <option selected="@( Model.PriorityId == 3 ? "selected":"")" value="3">High</option>
-                </select>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.TypeId, "Type")
-                <select id="TypeId" name="TypeId" class="form-control parsley-validated" data-required="true">
-                    <option value="">Type Select</option>
-                    <option class="divider" disabled="disabled"></option>
-                    <option selected="@( Model.TypeId == 1 ? "selected":"")" value="1">Improvement</option>
-                    <option selected="@( Model.TypeId == 2 ? "selected":"")" value="2">Bug</option>
-                    <option selected="@( Model.TypeId == 3 ? "selected":"")" value="3">Aesthetic</option>
-                </select>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.StatusId, "Status")
-                <select id="statusSelect" name="StatusId" class="form-control parsley-validated" data-required="true">
-                    <option value="">Status Select</option>
-                    <option class="divider" disabled="disabled"></option>
-                    <option selected="@( Model.StatusId == 1 ? "selected":"")" value="1">Not Started</option>
-                    <option selected="@( Model.StatusId == 2 ? "selected":"")" value="2">In Progress</option>
-                    <option selected="@( Model.StatusId == 3 ? "selected":"")" value="3">Completed</option>
-                </select>
-            </div>
-            <div class="form-group">
-                @Html.Hidden("FromProject", Model.FromProject)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.ProjectId, "Project")
-                @Html.DropDownList("ProjectId", projects)
-            </div>
-            @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
-            {
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AssignedToUserId, "Assign User")
-                    <select id="assignedSelect" name="AssignedToUserId" class="form-control parsley-validated" data-required="true">
-                        <option value="">Developer Select</option>
-                        <option class="divider" disabled="disabled"></option>
-                        @for (var i = 0; i < devArr.Count; i++)
-                        {
-                            if (devArr[i].Id == Model.AssignedToUserId) { 
-                                <option selected="selected" value="@devArr[i].Id">@devArr[i].DisplayName</option>
-                            }
-                            else {
-                                    <option value="@devArr[i].Id">@devArr[i].DisplayName</option>
-                            }
-                        }
-                    </select>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Desc, "Description")
+                        <textarea data-required="true" data-minlength="5" name="Desc" id="desc" class="form-control parsley-validated" style="height: 410px">@Model.Desc</textarea>
+                    </div>
                 </div>
-            }
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title)
+                        <input value="@Model.Title" type="text" id="title" name="Title" class="form-control parsley-validated" data-required="true">
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PriorityId, "Priority")
+                        @Html.DropDownList("PriorityId", priorities, new { @class = "form-control parsley-validated" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TypeId, "Type")
+                        @Html.DropDownList("TypeId", types, new { @class = "form-control parsley-validated" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StatusId, "Status")
+                        @Html.DropDownList("StatusId", statuses, new { @class = "form-control parsley-validated" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Hidden("FromProject", Model.FromProject)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProjectId, "Project")
+                        @Html.DropDownList("ProjectId", projects, new { @class = "form-control parsley-validated" })
+                    </div>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AssignedToUserId, "Assign User")
+                            <select id="assignedSelect" name="AssignedToUserId" class="form-control parsley-validated" data-required="true">
+                                <option value="">Developer Select</option>
+                                <option class="divider" disabled="disabled"></option>
+                                @for (var i = 0; i < devArr.Count; i++)
+                                {
+                                    if (devArr[i].Id == Model.AssignedToUserId)
+                                    {
+                                        <option selected="selected" value="@devArr[i].Id">@devArr[i].DisplayName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@devArr[i].Id">@devArr[i].DisplayName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
             </div>
         </form>
     </div> <!-- /.portlet-content -->

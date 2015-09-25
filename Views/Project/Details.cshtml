@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity;
-@model IEnumerable<bug_tracker.Models.Ticket>
+@using bug_tracker.Models;
+@model IEnumerable<Ticket>
 @{
     ViewBag.Title = "Project Details";
 }
@@ -48,6 +49,55 @@
         <div class="portlet">
             <div class="portlet-header">
                 <h3>
+                    <i class="fa fa-users"></i>
+                    Users
+                </h3>
+                <ul class="portlet-tools pull-right">
+                    <li>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Global Admin"))
+                        {
+                            <div style="text-align:center">
+                                <a href="@Url.Action("Users", new { id = ViewBag.Project.Id})" style="text-decoration:none; color: blue">Manage Users</a>
+                            </div>
+                        }
+                    </li>
+                </ul>
+            </div> <!-- /.portlet-header -->
+            <div class="portlet-content">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover table-highlight table-checkable"
+                           data-provide="datatable"
+                           data-display-rows="10"
+                           data-info="true"
+                           data-search="true"
+                           data-length-change="true"
+                           data-paginate="true">
+                        <thead>
+                            <tr>
+                                <th data-filterable="true" data-sortable="true" data-direction="asc">Name</th>
+                                <th data-filterable="true" data-sortable="true">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ApplicationUser user in ViewBag.Users)
+                            {
+                            <tr>
+                                    <td>@user.DisplayName</td>
+                                    <td>@user.Email</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-responsive -->
+            </div> <!-- /.portlet-content -->
+        </div> <!-- /.portlet -->
+    </div> <!-- /.col -->
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet">
+            <div class="portlet-header">
+                <h3>
                     <i class="fa fa-ticket"></i>
                     Tickets
                 </h3>
@@ -70,8 +120,8 @@
                         <thead>
                             <tr>
                                 <th>Edit</th>
-                                <th data-filterable="true" data-sortable="true" data-direction="asc">Title</th>
-                                <th data-filterable="true" data-sortable="true">Owner</th>
+                                <th data-filterable="true" data-sortable="true">Title</th>
+                                <th data-filterable="true" data-sortable="true" data-direction="desc">Created Date</th>
                                 <th data-filterable="true" data-sortable="true">Status</th>
                                 <th data-filterable="true" data-sortable="true">Priority</th>
                                 <th data-filterable="true" data-sortable="true">Project</th>
@@ -95,7 +145,7 @@
                                             @item.Title
                                         </a>
                                     </td>
-                                    <td>@item.Owner.DisplayName</td>
+                                    <td>@item.Created.DateTime</td>
                                     <td>@item.Status.Name</td>
                                     <td>@item.Priority.Name</td>
                                     <td>@item.Project.Title</td>

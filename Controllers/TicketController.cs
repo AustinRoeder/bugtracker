@@ -78,10 +78,16 @@ namespace bug_tracker.Controllers
         }
         public ActionResult Edit(int? id, bool? fromProject)
         {
-            ViewBag.Devs = helper.UsersInRole("Developer").ToList();
-            var user = db.Users.Find(User.Identity.GetUserId());
             var projects = db.Projects.ToList();
             ViewBag.Projects = projects;
+
+            ViewBag.Devs = helper.UsersInRole("Developer").ToList();
+
+            ViewBag.Statuses = db.TStatuses.ToList();
+            ViewBag.Priorities = db.TPriorities.ToList();
+            ViewBag.Types = db.TTypes.ToList();
+
+            var user = db.Users.Find(User.Identity.GetUserId());
             var model = db.Tickets.Find(id);
             model.FromProject = (bool)(fromProject != null ? fromProject : false);
             if (User.IsInRole("Admin") || User.IsInRole("Global Admin"))
