@@ -44,7 +44,10 @@
 @section scripts{
     <script>
         $(window).load(function () {
-            $('#my-select').multiSelect();
+            $('#my-select').multiSelect({
+                selectableHeader: "<div class='custom-header'>Selectable items</div>",
+                selectionHeader: "<div class='custom-header'>Selected items</div>",
+            });
         });
     </script>
 }
